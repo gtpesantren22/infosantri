@@ -13,6 +13,14 @@ if (!isset($_SESSION['truecaller'])) {
 }
 $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
+$level = $dt['level'];
+
+if($level === 'admin'){
+    $sql = mysqli_query($koneksi2, "SELECT * FROM tb_santri JOIN pulang ON tb_santri.nis = pulang.nis WHERE pulang.ket = 0 ");
+}else{
+    $sql = mysqli_query($koneksi2, "SELECT * FROM tb_santri JOIN pulang ON tb_santri.nis = pulang.nis WHERE pulang.ket = 0 AND tb_santri.t_formal = '$level' ");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +84,7 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Kelas Formal</th>
-                                            <th>Kelas Madin</th>
+                                            <th>Alasan</th>
                                             <th>Tanggal Pulang</th>
                                             <th style="text-align: center;">Aksi</th>
                                         </tr>
@@ -85,20 +93,21 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
                                         <?php
                                         include 'config/koneksi.php';
                                         $no = 1;
-                                        $sql = mysqli_query($koneksi2, "SELECT * FROM tb_santri JOIN pulang ON tb_santri.nis = pulang.nis WHERE tgl_kembali = '' ");
+                                        $sql = mysqli_query($koneksi2, "SELECT * FROM tb_santri JOIN pulang ON tb_santri.nis = pulang.nis WHERE pulang.ket = 0 AND tb_santri.t_formal = '$level' ");
                                         while ($row = mysqli_fetch_assoc($sql)) {
                                         ?>
                                             <tr>
                                                 <td><?php echo $no++ ?></td>
                                                 <td><?php echo $row['nama'] ?></td>
                                                 <td><?php echo $row['k_formal'] . ' - ' . $row['t_formal'] ?></td>
-                                                <td><?php echo $row['k_madin'] . ' - ' . $row['r_madin'] ?></td>
+                                                <td><?php echo $row['keperluan'] ?></td>
+                                                <!--<td><?php echo $row['k_madin'] . ' - ' . $row['r_madin'] ?></td>-->
                                                 <td><?php echo $row['tgl_pulang'] ?></td>
 
 
 
                                                 <td style="text-align: center;">
-                                                    <a href="<?= 'detail_santri_pulang.php?id=' . $row['id_pulang'] ?>" class="btn btn-success btn-icon-split btn-sm">
+                                                    <a href="<?= 'detail_santri_pulang.php?id=' . $row['id'] ?>" class="btn btn-success btn-icon-split btn-sm">
                                                         <span class="icon text-white-100">
                                                             <i class="fas fa-cog"></i>
                                                         </span>

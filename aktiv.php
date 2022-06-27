@@ -163,7 +163,7 @@
 <?php
 if (isset($_POST['save'])) {
 
-  $id_user = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['id_user']));
+  $id_user = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['id']));
   $nama = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['nama']));
   $username = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['username']));
   $password = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['password']));
@@ -195,20 +195,23 @@ if (isset($_POST['save'])) {
                 </script>
                 ";
 
-    $url = 'https://app.whacenter.com/api/send';
-    $ch = curl_init($url);
-    // $pesan = $pesan;
-    $data = array(
-      'device_id' => '42e589d874de10923bb28bbfdc11faab',
-      'number' => $hp,
-      'message' => $pesan,
-
+    $curl = curl_init();
+    curl_setopt_array(
+        $curl,
+        array(
+            CURLOPT_URL => 'http://8.215.26.187:3000/api/sendMessage',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => 'apiKey=fb209be1f23625e43cbf285e57c0c0f2&phone=' . $hp . '&message=' . $pesan,
+        )
     );
-    $payload = $data;
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $result = curl_exec($ch);
-    curl_close($ch);
+    $response = curl_exec($curl);
+    curl_close($curl);
   }
 }
 

@@ -1,19 +1,19 @@
 <?php
 include 'config/koneksi.php';
 $santri_sakit  = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS jml FROM sakit WHERE status = 'Sakit' "));
-$santri_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang WHERE tgl_kembali = '' "));
+$santri_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang WHERE ket = 0 "));
 
 $mts_sakit  = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS jml FROM sakit a JOIN tb_santri b ON a.nis=b.nis WHERE a.status = 'Sakit' AND b.t_formal = 'MTs' "));
-$mts_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang a JOIN tb_santri b ON a.nis=b.nis WHERE a.tgl_kembali = '' AND b.t_formal = 'MTs' "));
+$mts_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang a JOIN tb_santri b ON a.nis=b.nis WHERE a.ket = 0 AND b.t_formal = 'MTs' "));
 
 $smp_sakit  = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS jml FROM sakit a JOIN tb_santri b ON a.nis=b.nis WHERE a.status = 'Sakit' AND b.t_formal = 'SMP' "));
-$smp_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang a JOIN tb_santri b ON a.nis=b.nis WHERE a.tgl_kembali = '' AND b.t_formal = 'SMP' "));
+$smp_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang a JOIN tb_santri b ON a.nis=b.nis WHERE a.ket = 0 AND b.t_formal = 'SMP' "));
 
 $ma_sakit  = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS jml FROM sakit a JOIN tb_santri b ON a.nis=b.nis WHERE a.status = 'Sakit' AND b.t_formal = 'MA' "));
-$ma_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang a JOIN tb_santri b ON a.nis=b.nis WHERE a.tgl_kembali = '' AND b.t_formal = 'MA' "));
+$ma_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang a JOIN tb_santri b ON a.nis=b.nis WHERE a.ket = 0 AND b.t_formal = 'MA' "));
 
 $smk_sakit  = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS jml FROM sakit a JOIN tb_santri b ON a.nis=b.nis WHERE a.status = 'Sakit' AND b.t_formal = 'SMK' "));
-$smk_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang a JOIN tb_santri b ON a.nis=b.nis WHERE a.tgl_kembali = '' AND b.t_formal = 'SMk' "));
+$smk_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang a JOIN tb_santri b ON a.nis=b.nis WHERE a.ket = 0 AND b.t_formal = 'SMk' "));
 
 ?>
 
@@ -71,7 +71,11 @@ $smk_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml
                 <div class="card-body">
                     <strong>Santri Pulang : <?= $mts_pulang['jml']; ?></strong><br>
                     <strong>Santri Sakit : <?= $mts_sakit['jml']; ?></strong><br><br>
+                    <?php 
+                        if($level === 'MTs'){
+                    ?>
                     <a href="detail.php?lmb=MTs"><button class="btn btn-success btn-block">Cek Detail</button></a>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -83,7 +87,11 @@ $smk_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml
                 <div class="card-body">
                     <strong>Santri Pulang : <?= $smp_pulang['jml']; ?></strong><br>
                     <strong>Santri Sakit : <?= $smp_sakit['jml']; ?></strong><br><br>
+                    <?php 
+                        if($level === 'SMP'){
+                    ?>
                     <a href="detail.php?lmb=SMP"><button class="btn btn-success btn-block">Cek Detail</button></a>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -95,7 +103,11 @@ $smk_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml
                 <div class="card-body">
                     <strong>Santri Pulang : <?= $ma_pulang['jml']; ?></strong><br>
                     <strong>Santri Sakit : <?= $ma_sakit['jml']; ?></strong><br><br>
+                    <?php 
+                        if($level === 'MA'){
+                    ?>
                     <a href="detail.php?lmb=MA"><button class="btn btn-success btn-block">Cek Detail</button></a>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -107,7 +119,11 @@ $smk_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml
                 <div class="card-body">
                     <strong>Santri Pulang : <?= $smk_pulang['jml']; ?></strong><br>
                     <strong>Santri Sakit : <?= $smk_sakit['jml']; ?></strong><br><br>
+                    <?php 
+                        if($level === 'SMK'){
+                    ?>
                     <a href="detail.php?lmb=SMK"><button class="btn btn-success btn-block">Cek Detail</button></a>
+                    <?php } ?>
                 </div>
             </div>
         </div>

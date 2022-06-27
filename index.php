@@ -12,6 +12,7 @@ if (!isset($_SESSION['truecaller'])) {
 }
 $id = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id "));
+$level = $dt['level'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

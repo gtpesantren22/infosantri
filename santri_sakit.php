@@ -12,6 +12,14 @@ if (!isset($_SESSION['truecaller'])) {
 }
 $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
+$level = $dt['level'];
+
+if($level === 'admin'){
+    $sql = mysqli_query($koneksi, "SELECT * FROM tb_santri JOIN sakit ON tb_santri.nis = sakit.nis WHERE status = 'Sakit'");
+}else{
+    $sql = mysqli_query($koneksi, "SELECT * FROM tb_santri JOIN sakit ON tb_santri.nis = sakit.nis WHERE status = 'Sakit' AND tb_santri.t_formal = '$level'");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -76,6 +84,7 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
                                             <th>No</th>
                                             <th>Nis</th>
                                             <th>Nama</th>
+                                            <th>Kelas Formal</th>
                                             <th>Sakit</th>
                                             <th style="text-align: center;">Aksi</th>
                                         </tr>
@@ -84,7 +93,6 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
                                         <?php
                                         include 'config/koneksi.php';
                                         $no = 1;
-                                        $sql = mysqli_query($koneksi, "SELECT * FROM tb_santri JOIN sakit ON tb_santri.nis = sakit.nis WHERE status = 'Sakit'");
 
                                         while ($row = mysqli_fetch_assoc($sql)) {
                                         ?>
@@ -92,6 +100,7 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
                                                 <td><?php echo $no++ ?></td>
                                                 <td><?php echo $row['nis'] ?></td>
                                                 <td><?php echo $row['nama'] ?></td>
+                                                <td><?php echo $row['k_formal'] . ' - ' . $row['t_formal'] ?></td>
                                                 <td><?php echo $row['ds'] ?></td>
 
                                                 <td style="text-align: center;">

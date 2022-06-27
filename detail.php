@@ -71,13 +71,13 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr style="color: white; background-color: #20B2AA;">
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Kelas Formal</th>
-                                            <th>Kelas Madin</th>
+                                            <th>Alasan</th>
                                             <th>Tanggal Pulang</th>
                                             <th style="text-align: center;">Aksi</th>
                                         </tr>
@@ -86,14 +86,15 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
                                         <?php
                                         include 'config/koneksi.php';
                                         $no = 1;
-                                        $sql = mysqli_query($koneksi2, "SELECT * FROM tb_santri JOIN pulang ON tb_santri.nis = pulang.nis WHERE tgl_kembali = '' AND t_formal = '$lm' ");
+                                        $sql = mysqli_query($koneksi2, "SELECT * FROM tb_santri JOIN pulang ON tb_santri.nis = pulang.nis WHERE pulang.ket = 0 AND t_formal = '$lm' ");
                                         while ($row = mysqli_fetch_assoc($sql)) {
                                         ?>
-                                            <tr style="color: black; background-color: #E3E6F0;">
+                                            <tr>
                                                 <td><?php echo $no++ ?></td>
-                                                <td><?php echo $row['nama'] ?></td>
+                                                <td><?php echo $row['nama'] ?></t>
                                                 <td><?php echo $row['k_formal'] . ' - ' . $row['t_formal'] ?></td>
-                                                <td><?php echo $row['k_madin'] . ' - ' . $row['r_madin'] ?></td>
+                                                <!--<td><?php echo $row['k_madin'] . ' - ' . $row['r_madin'] ?></td>-->
+                                                <td><?php echo $row['keperluan'] ?></t>
                                                 <td><?php echo $row['tgl_pulang'] ?></td>
 
 

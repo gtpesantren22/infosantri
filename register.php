@@ -115,19 +115,22 @@ if (isset($_POST['daftar'])) {
         ";
     }
   }
-  $url = 'https://app.whacenter.com/api/send';
-  $ch = curl_init($url);
-  // $pesan = $pesan;
-  $data = array(
-    'device_id' => '42e589d874de10923bb28bbfdc11faab',
-    'number' => '085236924510',
-    'message' => $pesan,
-
-  );
-  $payload = $data;
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $result = curl_exec($ch);
-  curl_close($ch);
+  $curl = curl_init();
+    curl_setopt_array(
+        $curl,
+        array(
+            CURLOPT_URL => 'http://8.215.26.187:3000/api/sendMessage',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => 'apiKey=fb209be1f23625e43cbf285e57c0c0f2&phone=085236924510&message=' . $pesan,
+        )
+    );
+    $response = curl_exec($curl);
+    curl_close($curl);
 }
 ?>

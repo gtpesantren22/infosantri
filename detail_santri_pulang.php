@@ -15,7 +15,7 @@ $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
 
 $id = $_GET['id'];
-$data = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT * FROM pulang WHERE id_pulang = $id"));
+$data = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT * FROM pulang WHERE id = $id"));
 
 $id_pulang = $data['nis'];
 $data2 = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT * FROM tb_santri WHERE nis = $id_pulang"));
@@ -97,7 +97,7 @@ $data2 = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT * FROM tb_santri WHE
                                 <label>Wajib Kempali :</label><br>
                                 <input type="text" class="form-control" value="<?php echo $data['wajib_kembali'] ?>" disabled>
                                 <br>
-                                <a href="santri_sakit.php" class="btn btn-danger btn-icon-split btn-sm">
+                                <a href="santri_pulang.php" class="btn btn-danger btn-icon-split btn-sm">
                                     <span class="icon text-white-100">
                                         <i class="fas fa-sign-out-alt"></i>
                                     </span>
