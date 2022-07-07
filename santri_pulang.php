@@ -15,9 +15,9 @@ $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
 $level = $dt['level'];
 
-if($level === 'admin'){
+if ($level === 'admin') {
     $sql = mysqli_query($koneksi2, "SELECT * FROM tb_santri JOIN pulang ON tb_santri.nis = pulang.nis WHERE pulang.ket = 0 ");
-}else{
+} else {
     $sql = mysqli_query($koneksi2, "SELECT * FROM tb_santri JOIN pulang ON tb_santri.nis = pulang.nis WHERE pulang.ket = 0 AND tb_santri.t_formal = '$level' ");
 }
 
