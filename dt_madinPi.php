@@ -69,7 +69,7 @@ if ($level === 'admin') {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><b>DATA KELAS MADIN PUTRA</b></h1>
+                    <h1 class="h3 mb-2 text-gray-800"><b>DATA KELAS MADIN PUTRI</b></h1>
                     <hr>
 
 
@@ -80,7 +80,7 @@ if ($level === 'admin') {
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-12">
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
@@ -88,6 +88,7 @@ if ($level === 'admin') {
                                                     <th>No</th>
                                                     <th>Kelas</th>
                                                     <th>Tapel</th>
+                                                    <th>Jumlah</th>
                                                     <th style="text-align: center;">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -97,18 +98,24 @@ if ($level === 'admin') {
                                                 $no = 1;
 
                                                 while ($row = mysqli_fetch_assoc($sql)) {
+                                                    $kls = explode('-', $row['nm_kelas']);
+                                                    $k_madin = htmlspecialchars(mysqli_real_escape_string($koneksi3, $kls[0]));
+                                                    $r_madin = $kls[1];
+
+                                                    $jml = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_madin = '$k_madin' AND r_madin = '$r_madin' AND jkl = 'Perempuan' "));
                                                 ?>
                                                     <tr>
                                                         <td><?php echo $no++ ?></td>
                                                         <td><?php echo $row['nm_kelas'] ?></td>
                                                         <td><?php echo $row['tahun'] ?></td>
+                                                        <td><?php echo $jml ?> santri</td>
 
                                                         <td style="text-align: center;">
-                                                            <a href="<?= 'del.php?kd=kmd&id=' . $row['id_kl_madin'] ?>" class="btn btn-danger btn-icon-split btn-sm">
+                                                            <a href="<?= 'cek_madin.php?kls=' . $row['nm_kelas'] . '&jkl=Perempuan' ?>" class="btn btn-primary btn-icon-split btn-sm">
                                                                 <span class="icon text-white-100">
-                                                                    <i class="fas fa-cog"></i>
+                                                                    <i class="fas fa-search"></i>
                                                                 </span>
-                                                                <span class="text">Hapus</span>
+                                                                <span class="text">Cek Santri</span>
                                                             </a>
 
                                                         </td>
@@ -119,44 +126,6 @@ if ($level === 'admin') {
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <h4>Tambah Kelas Baru</h4>
-                                    <form action="" method="post">
-                                        <div class="form-group">
-                                            <select name="kelas" id="" class="form-control" required>
-                                                <option value=""> -pilih kelas- </option>
-                                                <?php
-                                                $skls = mysqli_query($koneksi3, "SELECT * FROM madin");
-                                                while ($r = mysqli_fetch_assoc($skls)) { ?>
-                                                    <option value="<?= $r['nama']; ?>"><?= $r['nama']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <select name="rombel" id="" class="form-control" required>
-                                                <option value=""> -pilih rombel- </option>
-                                                <?php
-                                                $skls = mysqli_query($koneksi3, "SELECT * FROM rombel");
-                                                while ($r = mysqli_fetch_assoc($skls)) { ?>
-                                                    <option value="<?= $r['nama']; ?>"><?= $r['nama']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <select name="tahun" id="" class="form-control" required>
-                                                <option value=""> -pilih tahun pelajaran- </option>
-                                                <?php
-                                                $skls = mysqli_query($koneksi3, "SELECT * FROM tahun");
-                                                while ($r = mysqli_fetch_assoc($skls)) { ?>
-                                                    <option value="<?= $r['nama']; ?>"><?= $r['nama']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-success" type="submit" name="save">Simpan</button>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>

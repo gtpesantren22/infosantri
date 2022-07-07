@@ -15,9 +15,9 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
 $level = $dt['level'];
 
 if ($level === 'admin') {
-    $sql = mysqli_query($koneksi3, "SELECT * FROM kl_formal ");
+    $sql = mysqli_query($koneksi3, "SELECT * FROM kl_madin ORDER BY nm_kelas");
 } else {
-    $sql = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$level'");
+    $sql = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$level' ORDER BY nm_kelas ");
 }
 
 ?>
@@ -39,6 +39,8 @@ if ($level === 'admin') {
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -78,14 +80,15 @@ if ($level === 'admin') {
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Nama</th>
+                                                    <th>Kelas</th>
                                                     <th>Tapel</th>
+                                                    <th>Jumlah</th>
                                                     <th style="text-align: center;">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -95,18 +98,24 @@ if ($level === 'admin') {
                                                 $no = 1;
 
                                                 while ($row = mysqli_fetch_assoc($sql)) {
+                                                    $kls = explode('-', $row['nm_kelas']);
+                                                    $k_madin = htmlspecialchars(mysqli_real_escape_string($koneksi3, $kls[0]));
+                                                    $r_madin = $kls[1];
+
+                                                    $jml = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_madin = '$k_madin' AND r_madin = '$r_madin' AND jkl = 'Laki-laki' "));
                                                 ?>
                                                     <tr>
                                                         <td><?php echo $no++ ?></td>
                                                         <td><?php echo $row['nm_kelas'] ?></td>
                                                         <td><?php echo $row['tahun'] ?></td>
+                                                        <td><?php echo $jml ?> santri</td>
 
                                                         <td style="text-align: center;">
-                                                            <a href="<?= 'detail_santri_sakit.php?id=' . $row['id_kl_formal'] ?>" class="btn btn-success btn-icon-split btn-sm">
+                                                            <a href="<?= 'cek_madin.php?kls=' . $row['nm_kelas'] . '&jkl=Laki-laki' ?>" class="btn btn-primary btn-icon-split btn-sm">
                                                                 <span class="icon text-white-100">
-                                                                    <i class="fas fa-cog"></i>
+                                                                    <i class="fas fa-search"></i>
                                                                 </span>
-                                                                <span class="text">Detail</span>
+                                                                <span class="text">Cek Santri</span>
                                                             </a>
 
                                                         </td>
@@ -117,21 +126,6 @@ if ($level === 'admin') {
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <h4>Tambah Kelas Baru</h4>
-                                    <form action="" method="post">
-                                        <div class="form-group">
-                                            <label for="">Pilih Kelas</label>
-                                            <select name="kelas" id="" class="form-control" required>
-                                                <option value=""> -pilih kelas- </option>
-                                                <?php
-                                                $skls = mysqli_query($koneksi3, "SELECT * FROM madin");
-                                                ?>
-                                                <?php ?>
-                                            </select>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -160,6 +154,33 @@ if ($level === 'admin') {
                 <!-- Custom scripts for all pages-->
                 <script src="js/sb-admin-2.min.js"></script>
 
+                <!-- Page level plugins -->
+                <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+                <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+                <!-- Page level custom scripts -->
+                <script src="js/demo/datatables-demo.js"></script>
+
 </body>
 
 </html>
+
+<?php
+
+if (isset($_POST['save'])) {
+    $kelas = mysqli_real_escape_string($koneksi3, $_POST['kelas']);
+    $rombel = $_POST['rombel'];
+    $tahun = $_POST['tahun'];
+    $nmOk = $kelas . '-' . $rombel;
+
+    $inn = mysqli_query($koneksi3, "INSERT INTO kl_madin VALUES ('', '$nmOk', '$tahun') ");
+
+    if ($inn) {
+        echo "
+        <script>
+            window.location = 'dt_kelasMd.php';
+        </script>
+    ";
+    }
+}
+?>
