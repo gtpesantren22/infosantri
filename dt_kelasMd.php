@@ -69,7 +69,7 @@ if ($level === 'admin') {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><b>DATA KELAS MADIN PUTRA</b></h1>
+                    <h1 class="h3 mb-2 text-gray-800"><b>DATA KELAS MADIN</b></h1>
                     <hr>
 
 
