@@ -37,3 +37,17 @@ if ($kd == 'hps_md') {
     ";
     }
 }
+
+if ($kd == 'hps_for') {
+    $snn = mysqli_fetch_assoc(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE nis = '$id' "));
+    $sq = mysqli_query($koneksi3, "UPDATE tb_santri SET k_formal = '', r_formal = '', jurusan = '', t_formal = '' WHERE nis = '$id' ");
+
+    $link = 'cek_formal.php?kls=' . $snn['k_formal'] . '-' . $snn['jurusan'] . '-' . $snn['r_formal'] . '-' . $snn['t_formal'];
+    if ($sq) {
+        echo "
+        <script>
+            window.location = '" . $link . "';
+        </script>
+    ";
+    }
+}

@@ -204,14 +204,24 @@ if (isset($_POST['save'])) {
     $tahun = $_POST['tahun'];
     $nmOk = $kelas . '-' . $rombel;
 
-    $inn = mysqli_query($koneksi3, "INSERT INTO kl_madin VALUES ('', '$nmOk', '$tahun') ");
-
-    if ($inn) {
+    $cck = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM kl_madin WHERE nm_kelas = '$nmOk' AND tahun = '$tahun' "));
+    if ($cck > 0) {
         echo "
         <script>
+            alert('Maaf. Kelas ini sudah ada');
             window.location = 'dt_kelasMd.php';
         </script>
-    ";
+        ";
+    } else {
+
+        $inn = mysqli_query($koneksi3, "INSERT INTO kl_madin VALUES ('', '$nmOk', '$tahun') ");
+        if ($inn) {
+            echo "
+            <script>
+                window.location = 'dt_kelasMd.php';
+            </script>
+            ";
+        }
     }
 }
 ?>
