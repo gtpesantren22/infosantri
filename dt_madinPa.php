@@ -102,7 +102,7 @@ if ($level === 'admin') {
                                                     $k_madin = htmlspecialchars(mysqli_real_escape_string($koneksi3, $kls[0]));
                                                     $r_madin = $kls[1];
 
-                                                    $jml = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_madin = '$k_madin' AND r_madin = '$r_madin' AND jkl = 'Laki-laki' "));
+                                                    $jml = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_madin = '$k_madin' AND r_madin = '$r_madin' AND jkl = 'Laki-laki' AND aktif = 'Y' "));
                                                 ?>
                                                     <tr>
                                                         <td><?php echo $no++ ?></td>

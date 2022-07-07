@@ -21,7 +21,7 @@ $jkl = $_GET['jkl'];
 
 $back = $jkl == 'Laki-laki' ? 'dt_madinPa.php' : 'dt_madinPi.php';
 
-$sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_madin = '$k_madin' AND r_madin = '$r_madin' AND jkl = '$jkl' ");
+$sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_madin = '$k_madin' AND r_madin = '$r_madin' AND jkl = '$jkl' AND aktif = 'Y' ");
 
 
 ?>
