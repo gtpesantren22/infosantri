@@ -10,11 +10,12 @@ if (!isset($_SESSION['truecaller'])) {
                 ";
     exit;
 }
+
 $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
 $level = $dt['level'];
 
-if ($level === 'admin') {
+if ($level == 'admin') {
     $sql = mysqli_query($koneksi3, "SELECT * FROM kl_formal ");
 } else {
     $sql = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$level'");
@@ -164,7 +165,7 @@ if ($level === 'admin') {
                                                 $skls = mysqli_query($koneksi3, "SELECT * FROM jurusan");
                                                 while ($kl = mysqli_fetch_assoc($skls)) {
                                                 ?>
-                                                    <option value="<?= $kl['kode']; ?>"><?= $kl['kode'] . ' - ' . $kl['nama']; ?></option>
+                                                    <option value="<?= $kl['nama']; ?>"><?= $kl['kode'] . ' - ' . $kl['nama']; ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>

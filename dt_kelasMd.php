@@ -17,7 +17,7 @@ $level = $dt['level'];
 if ($level === 'admin') {
     $sql = mysqli_query($koneksi3, "SELECT * FROM kl_madin ORDER BY nm_kelas");
 } else {
-    $sql = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$level' ORDER BY nm_kelas ");
+    $sql = mysqli_query($koneksi3, "SELECT * FROM kl_madin ORDER BY nm_kelas");
 }
 
 ?>

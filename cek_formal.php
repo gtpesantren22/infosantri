@@ -20,7 +20,7 @@ $jurusan = $kls[1];
 $r_formal = $kls[2];
 $t_formal = $kls[3];
 
-$sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_formal' AND r_formal = '$r_formal' AND jurusan = '$jurusan' AND t_formal = '$t_formal' AND aktif = 'Y' ");
+$sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_formal' AND r_formal = '$r_formal' AND jurusan = '$jurusan' AND t_formal = '$t_formal' AND aktif = 'Y' ORDER BY nama ASC ");
 
 
 ?>
