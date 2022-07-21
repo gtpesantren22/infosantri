@@ -108,7 +108,7 @@ if ($level == 'admin') {
                                                             while ($ar = mysqli_fetch_assoc($dtkls)) {
                                                                 $kls = $ar['k_formal'] . '-' . $ar['jurusan'] . '-' . $ar['r_formal'] . '-' . $ar['t_formal'];
                                                                 echo "
-                                                                <a href='cek_absen.php?kls=" . $kls . "' class='btn btn-primary btn-sm'>" . $kls . "</a>
+                                                                <a href='cek_absen.php?kls=" . $kls . "'><span class= 'badge badge-dark'>" . $kls . "</span></a>
                                                                 ";
                                                             }
                                                             ?>
