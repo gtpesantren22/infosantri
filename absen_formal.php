@@ -18,7 +18,7 @@ $level = $dt['level'];
 if ($level == 'admin') {
     $sql = mysqli_query($koneksi3, "SELECT * FROM absen ");
 } else {
-    $sql = mysqli_query($conn, "SELECT a.* FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE b.t_formal = '$level' GROUP BY a.tanggal");
+    $sql = mysqli_query($conn, "SELECT a.* FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE b.t_formal = '$level' AND b.aktif = 'Y' GROUP BY a.tanggal");
 }
 
 ?>
@@ -96,7 +96,7 @@ if ($level == 'admin') {
                                                 <?php
                                                 include 'config/koneksi.php';
                                                 $no = 1;
-                                                $dtkls = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' GROUP BY k_formal, r_formal, jurusan");
+                                                $dtkls = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND aktif = 'Y' GROUP BY k_formal, r_formal, jurusan");
                                                 while ($row = mysqli_fetch_assoc($sql)) {
                                                     // $kls = $row['k_formal'];
                                                 ?>
