@@ -65,6 +65,12 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
+        <a class="nav-link" href="absen_formal.php">
+            <i class="fas fa-fw fa-car"></i>
+            <span>Absensi kehadiran</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
             <span>Kelas Formal</span>
@@ -79,20 +85,7 @@
     </li>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Kelas Madin</span>
-        </a>
-        <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Kelas & Siswa</h6>
-                <a class="collapse-item" href="dt_kelasMd.php">Daftar Kelas</a>
-                <a class="collapse-item" href="dt_madinPa.php">Madin Putra</a>
-                <a class="collapse-item" href="dt_madinPi.php">Madin Putri</a>
-            </div>
-        </div>
-    </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
