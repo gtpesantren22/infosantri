@@ -115,7 +115,7 @@ if ($level == 'admin') {
                                                         </td>
 
                                                         <td style="text-align: center;">
-                                                            <a href="<?= 'cek_formal.php?kls=' . $row['id_absen'] ?>" class="btn btn-danger btn-icon-split btn-sm">
+                                                            <a href="<?= 'del.php?kd=abs&id=' . $row['id_absen'] ?>" class="btn btn-danger btn-icon-split btn-sm" onclick="return confirm('Yakin akan dihapus ?')">
                                                                 <span class="icon text-white-100">
                                                                     <i class="fas fa-trash"></i>
                                                                 </span>
@@ -199,20 +199,30 @@ if ($level == 'admin') {
 <?php
 
 if (isset($_POST['buat'])) {
-    $tanggal = mysqli_real_escape_string($koneksi3, $_POST['tanggal']);
-    $jp = mysqli_real_escape_string($koneksi3, $_POST['jp']);
+    $tanggal = mysqli_real_escape_string($conn, $_POST['tanggal']);
+    $jp = mysqli_real_escape_string($conn, $_POST['jp']);
 
-    $cck = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE t_formal = '$level' ");
-    while ($a = mysqli_fetch_array($cck)) {
-        $nis = $a['nis'];
-        $sql = mysqli_query($conn, "INSERT INTO absen VALUES('', '$tanggal', '$nis', '', '', '', '', '', '$jp')  ");
-    }
-    if ($sql) {
+    $cck = mysqli_query($conn, "SELECT * FROM absen WHERE lembaga = '$level' AND tanggal = '$tanggal' ");
+    if (mysqli_num_rows($cck) > 0) {
         echo "
+        <script>
+            alert('Absen sudah ada');
+            window.location = 'absen_formal.php';
+        </script>
+        ";
+    } else {
+        $dts = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' ");
+        while ($a = mysqli_fetch_array($dts)) {
+            $nis = $a['nis'];
+            $sql = mysqli_query($conn, "INSERT INTO absen VALUES('', '$tanggal', '$level', '$nis', '', '', '', '', '', '$jp')  ");
+        }
+        if ($sql) {
+            echo "
         <script>
             window.location = 'absen_formal.php';
         </script>
         ";
+        }
     }
 }
 ?>

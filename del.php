@@ -51,3 +51,19 @@ if ($kd == 'hps_for') {
     ";
     }
 }
+
+if ($kd == 'abs') {
+    $snn = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM absen WHERE id_absen = '$id' "));
+    $tanggal = $snn['tanggal'];
+    $lembaga = $snn['lembaga'];
+
+    $sq = mysqli_query($conn, "DELETE FROM absen WHERE lembaga = '$lembaga' AND tanggal = '$tanggal' ");
+
+    if ($sq) {
+        echo "
+        <script>
+            window.location = 'absen_formal.php';
+        </script>
+    ";
+    }
+}
