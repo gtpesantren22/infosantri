@@ -108,7 +108,7 @@ if ($level == 'admin') {
                                                             while ($ar = mysqli_fetch_assoc($dtkls)) {
                                                                 $kls = $ar['k_formal'] . '-' . $ar['jurusan'] . '-' . $ar['r_formal'] . '-' . $ar['t_formal'];
                                                                 echo "
-                                                                <a href='cek_absen.php?kls=" . $kls . "'><span class= 'badge badge-dark'>" . $kls . "</span></a>
+                                                                <a href='cek_absen.php?kls=" . $kls . "&tgl=" . $row['tanggal'] . "'><span class= 'badge badge-dark'>" . $kls . "</span></a>
                                                                 ";
                                                             }
                                                             ?>
@@ -214,7 +214,7 @@ if (isset($_POST['buat'])) {
         $dts = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' ");
         while ($a = mysqli_fetch_array($dts)) {
             $nis = $a['nis'];
-            $sql = mysqli_query($conn, "INSERT INTO absen VALUES('', '$tanggal', '$level', '$nis', '', '', '', '', '', '$jp')  ");
+            $sql = mysqli_query($conn, "INSERT INTO absen VALUES('', '$tanggal', '$level', '$nis', '', '', '', '$jp', 'Masuk Full', '$jp')  ");
         }
         if ($sql) {
             echo "
