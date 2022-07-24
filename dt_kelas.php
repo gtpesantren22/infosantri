@@ -81,7 +81,7 @@ if ($level == 'admin') {
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-8">
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
@@ -130,7 +130,7 @@ if ($level == 'admin') {
                                         </table>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <h4>Tambah Kelas Baru</h4>
                                     <form action="" method="post">
                                         <div class="form-group">
