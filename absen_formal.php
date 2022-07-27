@@ -75,59 +75,102 @@ if ($level == 'admin') {
 
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus-circle"></i> Buat Absen Baru</button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <button class="btn btn-sm btn-success btn-block" type="button" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus-circle"></i> Buat Absen Baru</button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p><b>Absensi Hari Ini <?= date('d-M-Y'); ?></b></p>
+                                            <?php
+                                            $now = date('Y-m-d');
+                                            $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga= '$level' ");
+                                            $cwk = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM absen WHERE tanggal = '$now' "));
+                                            if ($cwk > 1) {
+                                                while ($ar = mysqli_fetch_array($dtkls)) {
+                                                    $klsx = $ar['nm_kelas'];
+                                            ?>
+                                                    <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $now; ?>" class="btn btn-primary btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
+                                            <?php }
+                                            } else {
+                                                echo "Absen Hari Ini Belum dibuat. Ayo buat dulu!";
+                                            } ?>
+                                        </div>
+                                        <?php
+                                        if (isset($_POST['cekdt'])) {
+                                            $tanggalKo = $_POST['tanggal'];
+                                        ?>
+                                            &nbsp;
+                                            <hr>
+                                            <div class="col-md-12">
+                                                <div class="px-3 py-3 bg-gradient-light text-dark ">
+                                                    <p><b>Lihat Absensi Tanggal <?= $tanggalKo; ?></b></p>
+                                                    <?php
+
+                                                    $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga= '$level' ");
+
+                                                    while ($ar = mysqli_fetch_array($dtkls)) {
+                                                        $klsx = $ar['nm_kelas'];
+                                                    ?>
+                                                        <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $tanggalKo; ?>" class="btn btn-danger btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Tgl Absen</th>
-                                                    <th>Cek Perkelas</th>
-                                                    <th style="text-align: center;">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                include 'config/koneksi.php';
-                                                $no = 1;
-                                                $dtkls = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND aktif = 'Y' GROUP BY k_formal, r_formal, jurusan");
-                                                while ($row = mysqli_fetch_assoc($sql)) {
-                                                    // $kls = $row['k_formal'];
-                                                ?>
-                                                    <tr>
-                                                        <td><?= $no++ ?></td>
-                                                        <td><?= $row['tanggal'] ?></td>
-                                                        <td>
-                                                            <?php
-                                                            while ($ar = mysqli_fetch_assoc($dtkls)) {
-                                                                $kls = $ar['k_formal'] . '-' . $ar['jurusan'] . '-' . $ar['r_formal'] . '-' . $ar['t_formal'];
-                                                                echo "
-                                                                <a href='cek_absen.php?kls=" . $kls . "&tgl=" . $row['tanggal'] . "'><span class= 'badge badge-dark'>" . $kls . "</span></a>
-                                                                ";
-                                                            }
-                                                            ?>
-                                                        </td>
 
-                                                        <td style="text-align: center;">
-                                                            <a href="<?= 'del.php?kd=abs&id=' . $row['id_absen'] ?>" class="btn btn-danger btn-icon-split btn-sm" onclick="return confirm('Yakin akan dihapus ?')">
-                                                                <span class="icon text-white-100">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </span>
-                                                            </a>
+                        <div class="col-md-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    Data Absensi Santri
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Tgl Absen</th>
+                                                            <th style="text-align: center;">Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        include 'config/koneksi.php';
+                                                        $no = 1;
 
-                                                        </td>
-                                                    </tr>
-                                                <?php } ?>
+                                                        while ($row = mysqli_fetch_assoc($sql)) {
+                                                            // $kls = $row['k_formal'];
+                                                        ?>
+                                                            <tr>
+                                                                <td><?= $no++ ?></td>
+                                                                <td><?= $row['tanggal'] ?></td>
 
-
-                                            </tbody>
-                                        </table>
+                                                                <td style="text-align: center;">
+                                                                    <form action="" method="post">
+                                                                        <input type="hidden" name="tanggal" value="<?= $row['tanggal']; ?>">
+                                                                        <button class="btn btn-success btn-sm" type="submit" name="cekdt">Detail</button>
+                                                                        <a href="<?= 'del.php?kd=abs&id=' . $row['id_absen'] ?>" class="btn btn-danger btn-icon-split btn-sm" onclick="return confirm('Yakin akan dihapus ?')">
+                                                                            <span class="icon text-white-100">
+                                                                                <i class="fas fa-trash"></i>
+                                                                            </span>
+                                                                        </a>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -86,6 +86,7 @@ $qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
+                            <center><b>Cek Absensi Tanggal <?= $tgl; ?></b></center>
                         </div>
                         <div class="card-body">
                             <div class="row">
