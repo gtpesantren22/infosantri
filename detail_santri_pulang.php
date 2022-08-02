@@ -92,9 +92,9 @@ $data2 = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT * FROM tb_santri WHE
                                 <input type="text" class="form-control" value="<?php echo $data['tujuan'] ?>" disabled>
                                 <label>Keperluan :</label><br>
                                 <input type="text" class="form-control" value="<?php echo $data['keperluan'] ?>" disabled>
-                                <label>Tangga Pulang :</label><br>
+                                <label>Tanggal Pulang :</label><br>
                                 <input type="text" class="form-control" value="<?php echo $data['tgl_pulang'] ?>" disabled>
-                                <label>Wajib Kempali :</label><br>
+                                <label>Wajib Kembali :</label><br>
                                 <input type="text" class="form-control" value="<?php echo $data['wajib_kembali'] ?>" disabled>
                                 <br>
                                 <a href="santri_pulang.php" class="btn btn-danger btn-icon-split btn-sm">
