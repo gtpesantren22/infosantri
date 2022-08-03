@@ -86,6 +86,7 @@ if ($level === 'admin') {
                                             <th>Kelas Formal</th>
                                             <th>Alasan</th>
                                             <th>Tanggal Pulang</th>
+                                            <th>Wajib Kembali</th>
                                             <th style="text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
@@ -97,15 +98,13 @@ if ($level === 'admin') {
                                         while ($row = mysqli_fetch_assoc($sql)) {
                                         ?>
                                             <tr>
-                                                <td><?php echo $no++ ?></td>
-                                                <td><?php echo $row['nama'] ?></td>
-                                                <td><?php echo $row['k_formal'] . ' - ' . $row['t_formal'] ?></td>
-                                                <td><?php echo $row['keperluan'] ?></td>
-                                                <!--<td><?php echo $row['k_madin'] . ' - ' . $row['r_madin'] ?></td>-->
-                                                <td><?php echo $row['tgl_pulang'] ?></td>
-
-
-
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $row['nama'] ?></td>
+                                                <td><?= $row['k_formal'] . ' - ' . $row['t_formal'] ?></td>
+                                                <td><?= $row['keperluan'] ?></td>
+                                                <!--<td><?= $row['k_madin'] . ' - ' . $row['r_madin'] ?></td>-->
+                                                <td><?= $row['tgl_pulang'] ?></td>
+                                                <td><?= $row['wajib_kembali'] ?></td>
                                                 <td style="text-align: center;">
                                                     <a href="<?= 'detail_santri_pulang.php?id=' . $row['id'] ?>" class="btn btn-success btn-icon-split btn-sm">
                                                         <span class="icon text-white-100">

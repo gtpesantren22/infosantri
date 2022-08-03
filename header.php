@@ -18,7 +18,6 @@
 
         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
 
-
         <!-- Nav Item - Alerts -->
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
