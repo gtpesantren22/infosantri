@@ -62,29 +62,51 @@
     <div class="sidebar-heading">
         Addons
     </div>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Kelas Formal</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Kelas & Siswa</h6>
-                <a class="collapse-item" href="dt_kelas.php">Daftar Kelas</a>
-                <a class="collapse-item" href="register.html">Isi Santri</a>
+    <?php if ($level != 'madin') { ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Kelas Formal</span>
+            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Kelas & Siswa</h6>
+                    <a class="collapse-item" href="dt_kelas.php">Daftar Kelas</a>
+                    <a class="collapse-item" href="#">Isi Santri</a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link" href="absen_formal.php">
-            <i class="fas fa-fw fa-car"></i>
-            <span>Absensi kehadiran</span></a>
-    </li>
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link" href="absen_formal.php">
+                <i class="fas fa-fw fa-car"></i>
+                <span>Absensi (Formal)</span></a>
+        </li>
+    <?php }
+    if ($level == 'madin') { ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Kelas Madin</span>
+            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Kelas & Siswa</h6>
+                    <a class="collapse-item" href="dt_kelasMd.php">Daftar Kelas</a>
+                    <a class="collapse-item" href="dt_madinPa.php">Isi Santri (Putra)</a>
+                    <a class="collapse-item" href="dt_madinPi.php">Isi Santri (Putri)</a>
+                </div>
+            </div>
+        </li>
 
-
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link" href="absen_formal.php">
+                <i class="fas fa-fw fa-car"></i>
+                <span>Absensi (Madin)</span></a>
+        </li>
+    <?php } ?>
     <!-- Nav Item - Pages Collapse Menu -->
 
 
