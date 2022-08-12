@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\map;
+
 session_start();
 include 'config/koneksi.php';
 if (!isset($_SESSION['truecaller'])) {
@@ -18,8 +21,12 @@ $level = $dt['level'];
 if ($level == 'admin') {
     $sql = mysqli_query($koneksi3, "SELECT * FROM absen ");
 } else {
-    $sql = mysqli_query($conn, "SELECT a.* FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE b.t_formal = '$level' AND b.aktif = 'Y' GROUP BY a.tanggal");
+    $sql = mysqli_query($conn, "SELECT a.* FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE b.t_formal = '$level' AND b.aktif = 'Y' GROUP BY a.tanggal ORDER BY a.tanggal DESC LIMIT 1");
+    $sql2 = mysqli_query($conn, "SELECT a.* FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE b.t_formal = '$level' AND b.aktif = 'Y' GROUP BY a.tanggal ORDER BY a.tanggal DESC ");
 }
+$mgr = mysqli_fetch_assoc($sql);
+
+$bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 
 ?>
 
@@ -84,30 +91,26 @@ if ($level == 'admin') {
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <p><b>Absensi Hari Ini <?= date('d-M-Y'); ?></b></p>
+                                            <p><b>Absensi Terakhir : <?= $bn[$mgr['bulan']] . ', Minggu ke-' . $mgr['minggu']; ?></b></p>
                                             <?php
                                             $now = date('Y-m-d');
                                             $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga= '$level' ");
-                                            $cwk = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM absen WHERE tanggal = '$now' "));
-                                            if ($cwk > 1) {
-                                                while ($ar = mysqli_fetch_array($dtkls)) {
-                                                    $klsx = $ar['nm_kelas'];
+                                            while ($ar = mysqli_fetch_array($dtkls)) {
+                                                $klsx = $ar['nm_kelas'];
                                             ?>
-                                                    <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $now; ?>" class="btn btn-primary btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
-                                            <?php }
-                                            } else {
-                                                echo "Absen Hari Ini Belum dibuat. Ayo buat dulu!";
-                                            } ?>
+                                                <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $mgr['tanggal']  ?>" class="btn btn-primary btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
+                                            <?php } ?>
                                         </div>
                                         <?php
                                         if (isset($_POST['cekdt'])) {
                                             $tanggalKo = $_POST['tanggal'];
+                                            $dtks = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM absen WHERE tanggal = '$tanggalKo' AND lembaga = '$level' "));
                                         ?>
                                             &nbsp;
                                             <hr>
                                             <div class="col-md-12">
                                                 <div class="px-3 py-3 bg-gradient-light text-dark ">
-                                                    <p><b>Lihat Absensi Tanggal <?= $tanggalKo; ?></b></p>
+                                                    <p><b>Lihat Absensi Bulan <?= $bn[$dtks['bulan']] . ', Minggu ke-' . $dtks['minggu']; ?></b></p>
                                                     <?php
 
                                                     $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga= '$level' ");
@@ -115,7 +118,7 @@ if ($level == 'admin') {
                                                     while ($ar = mysqli_fetch_array($dtkls)) {
                                                         $klsx = $ar['nm_kelas'];
                                                     ?>
-                                                        <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $tanggalKo; ?>" class="btn btn-danger btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
+                                                        <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $tanggalKo  ?>" class="btn btn-danger btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
                                                     <?php } ?>
                                                 </div>
                                             </div>
@@ -138,7 +141,7 @@ if ($level == 'admin') {
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Tgl Absen</th>
+                                                            <th>Ket Absen</th>
                                                             <th style="text-align: center;">Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -147,12 +150,16 @@ if ($level == 'admin') {
                                                         include 'config/koneksi.php';
                                                         $no = 1;
 
-                                                        while ($row = mysqli_fetch_assoc($sql)) {
+                                                        while ($row = mysqli_fetch_assoc($sql2)) {
                                                             // $kls = $row['k_formal'];
                                                         ?>
                                                             <tr>
                                                                 <td><?= $no++ ?></td>
-                                                                <td><?= $row['tanggal'] ?></td>
+                                                                <td>
+                                                                    <span class="badge badge-info">Minggu ke-<?= $row['minggu'] ?></span>
+                                                                    <span class="badge badge-dark"><?= $bn[$row['bulan']] ?></span>
+                                                                    <span class="badge badge-primary"><?= $row['ta'] ?></span>
+                                                                </td>
 
                                                                 <td style="text-align: center;">
                                                                     <form action="" method="post">
@@ -190,14 +197,38 @@ if ($level == 'admin') {
                             </div>
                             <form action="" method="post">
                                 <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="">Pilih Tanggal Absensi</label>
-                                        <input type="date" name="tanggal" id="" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Masukan Jumlah Jam Pelajaran (dalam sehari)</label>
-                                        <input type="number" name="jp" id="" class="form-control" required placeholder="Jumlah JP">
-                                    </div>
+                                    <input type="hidden" name="act" value="add">
+                                    <select name="mg" id="" class="form-control" required>
+                                        <option value=""> -- pilih minggu-- </option>
+                                        <option value="1">Minggu Ke-1</option>
+                                        <option value="2">Minggu Ke-2</option>
+                                        <option value="3">Minggu Ke-3</option>
+                                        <option value="4">Minggu Ke-4</option>
+                                        <option value="5">Minggu Ke-5</option>
+                                    </select>
+                                    <br>
+                                    <select name="bln" id="" class="form-control" required>
+                                        <option value=""> -- pilih bulan-- </option>
+                                        <?php
+                                        for ($i = 1; $i <= 12; $i++) { ?>
+                                            <option value="<?= $i ?>"><?= $bn[$i] ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                    <br>
+                                    <select name="ta" id="" class="form-control" required>
+                                        <option value=""> -- pilih TA-- </option>
+                                        <?php
+                                        $th = mysqli_query($conn, "SELECT * FROM tahun");
+                                        while ($tt = mysqli_fetch_assoc($th)) { ?>
+                                            <option value="<?= $tt['nama'] ?>"><?= $tt['nama'] ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                    <br>
+                                    <input type="text" name="tgl" class="form-control" value="<?= date('Y-m-d'); ?>" readonly>
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -242,30 +273,38 @@ if ($level == 'admin') {
 <?php
 
 if (isset($_POST['buat'])) {
-    $tanggal = mysqli_real_escape_string($conn, $_POST['tanggal']);
-    $jp = mysqli_real_escape_string($conn, $_POST['jp']);
+    $mg = $_POST['mg'];
+    $bln = $_POST['bln'];
+    $ta = $_POST['ta'];
+    $tgl = $_POST['tgl'];
 
-    $cck = mysqli_query($conn, "SELECT * FROM absen WHERE lembaga = '$level' AND tanggal = '$tanggal' ");
-    if (mysqli_num_rows($cck) > 0) {
+    $cek = mysqli_query($conn, "SELECT * FROM absen WHERE bulan = $bln AND minggu = $mg AND ta = '$ta' AND lembaga = '$level' ");
+    $cek2 = mysqli_query($conn, "SELECT * FROM absen WHERE tanggal = '$tgl' AND lembaga = '$level' ");
+    if (mysqli_num_rows($cek2) > 0) {
         echo "
         <script>
-            alert('Absen sudah ada');
-            window.location = 'absen_formal.php';
+        alert('Ada absen yang sudah dibuat pada tanggal ini. Silahkan buat ditanggal lain');
+        window.location = 'absen_formal.php';
+        </script>
+        ";
+    } else if (mysqli_num_rows($cek) > 0) {
+        echo "
+        <script>
+        alert('Absen Minggu ini sudah buat');
+        window.location = 'absen_formal.php';
         </script>
         ";
     } else {
-        $dts = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' ");
-        while ($a = mysqli_fetch_array($dts)) {
-            $nis = $a['nis'];
-            $sql = mysqli_query($conn, "INSERT INTO absen VALUES('', '$tanggal', '$level', '$nis', '', '', '', '$jp', 'Masuk Full', '$jp')  ");
+        $dt = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' ");
+        while ($in = mysqli_fetch_assoc($dt)) {
+            $nis = $in['nis'];
+            $input =  mysqli_query($conn, "INSERT INTO absen VALUES('', '$level', '$nis', '$bln', '$mg', '$tgl', '0', '0', '0', '-', '$ta')");
         }
-        if ($sql) {
-            echo "
-        <script>
+        echo "
+            <script>
             window.location = 'absen_formal.php';
-        </script>
+            </script>
         ";
-        }
     }
 }
 ?>

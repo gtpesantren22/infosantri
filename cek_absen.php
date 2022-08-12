@@ -30,6 +30,9 @@ $t_formal = $kls[3];
 
 $qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE a.tanggal = '$tgl' AND b.t_formal = '$t_formal' AND b.jurusan = '$jurusan' AND b.r_formal = '$r_formal' AND b.k_formal = '$k_formal' AND b.aktif = 'Y' ");
 
+$dtsa = mysqli_fetch_assoc($qr);
+$bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +89,7 @@ $qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <center><b>Cek Absensi Tanggal <?= $tgl; ?></b></center>
+                            <center><b>Cek Absensi Bulan <span class="badge badge-primary"><?= $bn[$dtsa['bulan']]; ?></span> <span class="badge badge-success">Minggu ke-<?= $dtsa['minggu']; ?></span></b></center>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -98,15 +101,13 @@ $qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a
                                                     <th rowspan="2">No</th>
                                                     <th rowspan="2">Nama</th>
                                                     <th rowspan="2">Kelas</th>
-                                                    <th colspan="5">Keterangan (per jam pelajaran)</th>
-                                                    <th rowspan="2">JP</th>
+                                                    <th colspan="4">Keterangan </th>
                                                     <th rowspan="2">Aksi</th>
                                                 </tr>
                                                 <tr>
-                                                    <th>I</th>
-                                                    <th>S</th>
-                                                    <th>A</th>
-                                                    <th>H</th>
+                                                    <th>Izin</th>
+                                                    <th>Sakit</th>
+                                                    <th>Alpha</th>
                                                     <th>Ket</th>
                                                 </tr>
                                             </thead>
@@ -122,9 +123,7 @@ $qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a
                                                         <td><?= $r['I'] ?></td>
                                                         <td><?= $r['S'] ?></td>
                                                         <td><?= $r['A'] ?></td>
-                                                        <td><?= $r['H'] ?></td>
                                                         <td><?= $r['ket'] ?></td>
-                                                        <td><?= $r['jam'] ?> jp</td>
                                                         <td>
                                                             <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#exampleModal<?= $r['id_absen'] ?>">
                                                                 <i class="fa fa-edit"> </i>
@@ -170,18 +169,11 @@ $qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a
                                                                                         <th>Alpha</th>
                                                                                         <th><input type="number" class="form-control" name="A" value="<?= $r['A'] ?>" required></th>
                                                                                     </tr>
-                                                                                    <!-- <tr>
-                                                                                        <th>Hadir</th>
-                                                                                        <th><input type="text" class="form-control" name="H" value="<?= $r['H'] ?>" required readonly></th>
-                                                                                    </tr> -->
                                                                                     <tr>
                                                                                         <th>Ket</th>
                                                                                         <th>
                                                                                             <textarea name="ket" class="form-control" cols="15" rows="2" required><?= $r['ket'] ?></textarea>
                                                                                         </th>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <th colspan="2"><i>Jumlah A, I, S, dan H tidak boleh melebihi JP : (<?= $r['jam']; ?> jp)</i></th>
                                                                                     </tr>
                                                                                 </table>
 
@@ -248,29 +240,30 @@ if (isset($_POST['update'])) {
     $A = mysqli_real_escape_string($conn, $_POST['A']);
     $I = mysqli_real_escape_string($conn, $_POST['I']);
     $S = mysqli_real_escape_string($conn, $_POST['S']);
-    // $H = mysqli_real_escape_string($conn, $_POST['H']);
     $ket = mysqli_real_escape_string($conn, $_POST['ket']);
-    $jp = mysqli_real_escape_string($conn, $_POST['jp']);
+    // $jp = mysqli_real_escape_string($conn, $_POST['jp']);
 
     $link = 'cek_absen.php?kls=' . $_GET['kls'] . '&tgl=' . $tgl;
 
-    if (($A + $S + $H + $I) > $jp) {
+    // if (($A + $S + $H + $I)) {
+    //     echo "
+    //     <script>
+    //         alert('Maaf. Akumulasi jml absen lebih');
+    //         window.location = '" . $link . "';
+    //     </script>
+    //     ";
+    // } else {
+    //     // $hsisa = $jp - ($A + $I + $S);
+
+    // }
+
+    $ssq = mysqli_query($conn, "UPDATE absen SET A = '$A', S = '$S', I = '$I', ket = '$ket'  WHERE id_absen = '$id_absen' ");
+    if ($ssq) {
         echo "
-        <script>
-            alert('Maaf. Akumulasi jml absen lebih');
-            window.location = '" . $link . "';
-        </script>
-        ";
-    } else {
-        $hsisa = $jp - ($A + $I + $S);
-        $ssq = mysqli_query($conn, "UPDATE absen SET A = '$A', S = '$S', I = '$I', H = '$hsisa', ket = '$ket'  WHERE id_absen = '$id_absen' ");
-        if ($ssq) {
-            echo "
             <script>
                 window.location = '" . $link . "';
             </script>
             ";
-        }
     }
 }
 ?>
