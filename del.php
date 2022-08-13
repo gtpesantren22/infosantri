@@ -67,3 +67,19 @@ if ($kd == 'abs') {
     ";
     }
 }
+
+if ($kd == 'absmd') {
+    $snn = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM absen_md WHERE id_absen = '$id' "));
+    $tanggal = $snn['tanggal'];
+    $jkl = $snn['jkl'];
+    $linkBack = $jkl === 'Laki-laki' ? 'absen_madinPa.php' : 'absen_madinPi.php';
+    $sq = mysqli_query($conn, "DELETE FROM absen_md WHERE jkl = '$jkl' AND tanggal = '$tanggal' ");
+
+    if ($sq) {
+        echo "
+        <script>
+            window.location = '" . $linkBack . "';
+        </script>
+    ";
+    }
+}

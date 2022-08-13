@@ -18,11 +18,11 @@ $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
 $level = $dt['level'];
 
-if ($level == 'admin') {
-    $sql = mysqli_query($koneksi3, "SELECT * FROM absen ");
+if ($level == 'madin') {
+    $sql = mysqli_query($conn, "SELECT a.* FROM absen_md a JOIN tb_santri b ON a.nis=b.nis WHERE b.jkl= 'Perempuan' AND b.aktif = 'Y' GROUP BY a.tanggal ORDER BY a.tanggal DESC LIMIT 1");
+    $sql2 = mysqli_query($conn, "SELECT a.* FROM absen_md a JOIN tb_santri b ON a.nis=b.nis WHERE b.jkl= 'Perempuan' AND b.aktif = 'Y' GROUP BY a.tanggal ORDER BY a.tanggal DESC ");
 } else {
-    $sql = mysqli_query($conn, "SELECT a.* FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE b.t_formal = '$level' AND b.aktif = 'Y' GROUP BY a.tanggal ORDER BY a.tanggal DESC LIMIT 1");
-    $sql2 = mysqli_query($conn, "SELECT a.* FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE b.t_formal = '$level' AND b.aktif = 'Y' GROUP BY a.tanggal ORDER BY a.tanggal DESC ");
+    $sql = mysqli_query($koneksi3, "SELECT * FROM absen_md ");
 }
 $mgr = mysqli_fetch_assoc($sql);
 
@@ -77,7 +77,7 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><b>DATA ABSENSI LEMBAGA - <?= $level; ?></b></h1>
+                    <h1 class="h3 mb-2 text-gray-800"><b>DATA ABSENSI MADIN PUTRI</b></h1>
                     <hr>
 
 
@@ -94,17 +94,18 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                                             <p><b>Absensi Terakhir : <?= $bn[$mgr['bulan']] . ', Minggu ke-' . $mgr['minggu']; ?></b></p>
                                             <?php
                                             $now = date('Y-m-d');
-                                            $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga= '$level' ");
+                                            $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_madin  ");
                                             while ($ar = mysqli_fetch_array($dtkls)) {
                                                 $klsx = $ar['nm_kelas'];
                                             ?>
-                                                <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $mgr['tanggal']  ?>" class="btn btn-primary btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
+                                                <a href="<?= 'cek_absenMd.php?kls=' . $klsx . '&tgl=' . $mgr['tanggal'] . '&jkl=Perempuan'  ?>" class="btn btn-primary btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
                                             <?php } ?>
                                         </div>
                                         <?php
                                         if (isset($_POST['cekdt'])) {
                                             $tanggalKo = $_POST['tanggal'];
-                                            $dtks = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM absen WHERE tanggal = '$tanggalKo' AND lembaga = '$level' "));
+                                            $jkl = $_POST['jkl'];
+                                            $dtks = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM absen_md WHERE tanggal = '$tanggalKo' AND jkl = '$jkl' "));
                                         ?>
                                             &nbsp;
                                             <hr>
@@ -113,12 +114,12 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                                                     <p><b>Lihat Absensi Bulan <?= $bn[$dtks['bulan']] . ', Minggu ke-' . $dtks['minggu']; ?></b></p>
                                                     <?php
 
-                                                    $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga= '$level' ");
+                                                    $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_madin  ");
 
                                                     while ($ar = mysqli_fetch_array($dtkls)) {
                                                         $klsx = $ar['nm_kelas'];
                                                     ?>
-                                                        <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $tanggalKo  ?>" class="btn btn-danger btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
+                                                        <a href="<?= 'cek_absenMd.php?kls=' . $klsx . '&tgl=' . $tanggalKo . '&jkl=Perempuan'  ?>" class="btn btn-danger btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
                                                     <?php } ?>
                                                 </div>
                                             </div>
@@ -164,8 +165,9 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                                                                 <td style="text-align: center;">
                                                                     <form action="" method="post">
                                                                         <input type="hidden" name="tanggal" value="<?= $row['tanggal']; ?>">
+                                                                        <input type="hidden" name="jkl" value="<?= $row['jkl']; ?>">
                                                                         <button class="btn btn-success btn-sm" type="submit" name="cekdt">Detail</button>
-                                                                        <a href="<?= 'del.php?kd=abs&id=' . $row['id_absen'] ?>" class="btn btn-danger btn-icon-split btn-sm" onclick="return confirm('Yakin akan dihapus ?')">
+                                                                        <a href="<?= 'del.php?kd=absmd&id=' . $row['id_absen'] ?>" class="btn btn-danger btn-icon-split btn-sm" onclick="return confirm('Yakin akan dihapus ?')">
                                                                             <span class="icon text-white-100">
                                                                                 <i class="fas fa-trash"></i>
                                                                             </span>
@@ -278,31 +280,31 @@ if (isset($_POST['buat'])) {
     $ta = $_POST['ta'];
     $tgl = $_POST['tgl'];
 
-    $cek = mysqli_query($conn, "SELECT * FROM absen WHERE bulan = $bln AND minggu = $mg AND ta = '$ta' AND lembaga = '$level' ");
-    $cek2 = mysqli_query($conn, "SELECT * FROM absen WHERE tanggal = '$tgl' AND lembaga = '$level' ");
+    $cek = mysqli_query($conn, "SELECT * FROM absen_md WHERE bulan = $bln AND minggu = $mg AND ta = '$ta' AND jkl = 'Perempuan' ");
+    $cek2 = mysqli_query($conn, "SELECT * FROM absen_md WHERE tanggal = '$tgl' AND jkl = 'Perempuan' ");
     if (mysqli_num_rows($cek2) > 0) {
         echo "
         <script>
         alert('Ada absen yang sudah dibuat pada tanggal ini. Silahkan buat ditanggal lain');
-        window.location = 'absen_formal.php';
+        window.location = 'absen_madinPi.php';
         </script>
         ";
     } else if (mysqli_num_rows($cek) > 0) {
         echo "
         <script>
         alert('Absen Minggu ini sudah buat');
-        window.location = 'absen_formal.php';
+        window.location = 'absen_madinPi.php';
         </script>
         ";
     } else {
-        $dt = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' ");
+        $dt = mysqli_query($conn, "SELECT * FROM tb_santri WHERE jkl = 'Perempuan' AND aktif = 'Y' ");
         while ($in = mysqli_fetch_assoc($dt)) {
             $nis = $in['nis'];
-            $input =  mysqli_query($conn, "INSERT INTO absen VALUES('', '$level', '$nis', '$bln', '$mg', '$tgl', '0', '0', '0', '-', '$ta')");
+            $input =  mysqli_query($conn, "INSERT INTO absen_md VALUES('', 'Perempuan', '$nis', '$bln', '$mg', '$tgl', '0', '0', '0', '-', '$ta')");
         }
         echo "
             <script>
-            window.location = 'absen_formal.php';
+            window.location = 'absen_madinPi.php';
             </script>
         ";
     }

@@ -18,18 +18,17 @@ $level = $dt['level'];
 if ($level == 'admin') {
     $sql = mysqli_query($koneksi3, "SELECT * FROM absen ");
 } else {
-    $sql = mysqli_query($conn, "SELECT a.* FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE b.t_formal = '$level' AND b.aktif = 'Y' GROUP BY a.tanggal");
+    $sql = mysqli_query($conn, "SELECT a.* FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE b.aktif = 'Y' GROUP BY a.tanggal");
 }
 
 $kls = explode('-', $_GET['kls']);
 $tgl = $_GET['tgl'];
-$k_formal = $kls[0];
-$jurusan = $kls[1];
-$r_formal = $kls[2];
-$t_formal = $kls[3];
+$k_madin = $kls[0];
+$r_madin = $kls[1];
+$jkl = $_GET['jkl'];
 
-$qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE a.tanggal = '$tgl' AND b.t_formal = '$t_formal' AND b.jurusan = '$jurusan' AND b.r_formal = '$r_formal' AND b.k_formal = '$k_formal' AND b.aktif = 'Y' ");
-$qr2 = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE a.tanggal = '$tgl' AND b.t_formal = '$t_formal' AND b.jurusan = '$jurusan' AND b.r_formal = '$r_formal' AND b.k_formal = '$k_formal' AND b.aktif = 'Y' ");
+$qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen_md a JOIN tb_santri b ON a.nis=b.nis WHERE a.tanggal = '$tgl' AND b.k_madin = '$k_madin' AND b.r_madin = '$r_madin' AND a.jkl = '$jkl' AND b.aktif = 'Y' ORDER BY b.nama ASC ");
+$qr2 = mysqli_query($conn, "SELECT a.*, b.nama FROM absen_md a JOIN tb_santri b ON a.nis=b.nis WHERE a.tanggal = '$tgl' AND b.k_madin = '$k_madin' AND b.r_madin = '$r_madin' AND a.jkl = '$jkl' AND b.aktif = 'Y' ORDER BY b.nama ASC ");
 
 $dtsa = mysqli_fetch_assoc($qr2);
 $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
@@ -83,7 +82,7 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><b>DATA KELAS FORMAL LEMBAGA - <?= $level; ?></b></h1>
+                    <h1 class="h3 mb-2 text-gray-800"><b>DATA ABSENSI MADIN</b></h1>
                     <hr>
 
 
@@ -144,7 +143,7 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                                                                             <div class="modal-body">
                                                                                 <input type="hidden" name="act" value="edit">
                                                                                 <input type="hidden" name="id_absen" value="<?= $r['id_absen'] ?>">
-                                                                                <input type="hidden" name="jp" value="<?= $r['jam'] ?>">
+                                                                                <!-- <input type="hidden" name="jp" value="<?= $r['jam'] ?>"> -->
                                                                                 <table class="table ">
                                                                                     <tr>
                                                                                         <th>Nama</th>
@@ -244,7 +243,7 @@ if (isset($_POST['update'])) {
     $ket = mysqli_real_escape_string($conn, $_POST['ket']);
     // $jp = mysqli_real_escape_string($conn, $_POST['jp']);
 
-    $link = 'cek_absen.php?kls=' . $_GET['kls'] . '&tgl=' . $tgl;
+    $link = 'cek_absenMd.php?kls=' . $_GET['kls'] . '&tgl=' . $tgl . '&jkl=' . $jkl;
 
     // if (($A + $S + $H + $I)) {
     //     echo "
@@ -258,7 +257,7 @@ if (isset($_POST['update'])) {
 
     // }
 
-    $ssq = mysqli_query($conn, "UPDATE absen SET alpha = '$A', sakit = '$S', izin = '$I', ket = '$ket'  WHERE id_absen = '$id_absen' ");
+    $ssq = mysqli_query($conn, "UPDATE absen_md SET alpha = '$A', sakit = '$S', izin = '$I', ket = '$ket'  WHERE id_absen = '$id_absen' ");
     if ($ssq) {
         echo "
             <script>
