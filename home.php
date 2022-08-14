@@ -21,7 +21,7 @@ $smk_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        <h1 class="h3 mb-0 text-gray-800">Dashboard <?= $dt['nama']; ?> (<?= $dt['level']; ?>)</h1>
 
     </div>
 
