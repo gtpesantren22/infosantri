@@ -1,7 +1,5 @@
 <?php
 
-use function PHPSTORM_META\map;
-
 session_start();
 include 'config/koneksi.php';
 if (!isset($_SESSION['truecaller'])) {
