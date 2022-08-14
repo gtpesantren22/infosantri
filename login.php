@@ -132,7 +132,6 @@ if (isset($_POST['masuk'])) {
                 window.location = 'index.php';
                 </script>
                 ";
-        exit;
       }
     }
   }
