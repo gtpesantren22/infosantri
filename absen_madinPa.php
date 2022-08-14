@@ -49,6 +49,8 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Datepicker -->
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -228,7 +230,11 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                                         ?>
                                     </select>
                                     <br>
-                                    <input type="text" name="tgl" class="form-control" value="<?= date('Y-m-d'); ?>" readonly>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="dari" id="datepicker" placeholder="Dari tanggal" aria-label="Username">
+                                        <!-- <span class="input-group-text">s/d</span> -->
+                                        <input type="text" class="form-control" name="sampai" id="datepicker2" placeholder="Sampai tanggal" aria-label="Server">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -266,6 +272,17 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                 <!-- Page level custom scripts -->
                 <script src="js/demo/datatables-demo.js"></script>
 
+                <!-- Datepicker -->
+                <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+                <script>
+                    $('#datepicker').datepicker({
+                        uiLibrary: 'bootstrap4'
+                    });
+                    $('#datepicker2').datepicker({
+                        uiLibrary: 'bootstrap4'
+                    });
+                </script>
+
 </body>
 
 </html>
@@ -276,7 +293,11 @@ if (isset($_POST['buat'])) {
     $mg = $_POST['mg'];
     $bln = $_POST['bln'];
     $ta = $_POST['ta'];
-    $tgl = $_POST['tgl'];
+    $dari = $_POST['dari'];
+    $sampai = $_POST['sampai'];
+    $range = date('d-M-Y', strtotime($dari)) . ' s/d ' . date('d-M-Y', strtotime($sampai));
+
+    $tgl = date('Y-m-d');
 
     $cek = mysqli_query($conn, "SELECT * FROM absen_md WHERE bulan = $bln AND minggu = $mg AND ta = '$ta' AND jkl = 'Laki-laki' ");
     $cek2 = mysqli_query($conn, "SELECT * FROM absen_md WHERE tanggal = '$tgl' AND jkl = 'Laki-laki' ");
@@ -298,7 +319,7 @@ if (isset($_POST['buat'])) {
         $dt = mysqli_query($conn, "SELECT * FROM tb_santri WHERE jkl = 'Laki-laki' AND aktif = 'Y' ");
         while ($in = mysqli_fetch_assoc($dt)) {
             $nis = $in['nis'];
-            $input =  mysqli_query($conn, "INSERT INTO absen_md VALUES('', 'Laki-laki', '$nis', '$bln', '$mg', '$tgl', '0', '0', '0', '-', '$ta')");
+            $input =  mysqli_query($conn, "INSERT INTO absen_md VALUES('', 'Laki-laki', '$nis', '$bln', '$mg', '$range', '$tgl', '0', '0', '0', '-', '$ta')");
         }
         echo "
             <script>
