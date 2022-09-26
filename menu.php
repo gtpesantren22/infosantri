@@ -72,7 +72,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Kelas & Siswa</h6>
                     <a class="collapse-item" href="dt_kelas.php">Daftar Kelas</a>
-                    <a class="collapse-item" href="#">Isi Santri</a>
+                    <a class="collapse-item" href="nisn.php">Isi NISN Santri</a>
                 </div>
             </div>
         </li>
