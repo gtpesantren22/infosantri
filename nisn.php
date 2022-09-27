@@ -38,9 +38,7 @@ if ($level == 'admin') {
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -85,8 +83,7 @@ if ($level == 'admin') {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-sm" id="dataTable" width="100%"
-                                            cellspacing="0">
+                                        <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -110,22 +107,21 @@ if ($level == 'admin') {
 
                                                     $jml = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE t_formal = '$t_formal' AND k_formal = '$kelas' AND jurusan = '$jurusan' AND r_formal = '$r_formal' AND aktif = 'Y' "));
                                                 ?>
-                                                <tr>
-                                                    <td><?php echo $no++ ?></td>
-                                                    <td><?php echo $row['nm_kelas'] ?></td>
-                                                    <td><?php echo $row['tahun'] ?></td>
-                                                    <td><?php echo $jml ?> santri</td>
-                                                    <td style="text-align: center;">
-                                                        <a href="<?= 'cek_nisn.php?kls=' . $row['nm_kelas'] ?>"
-                                                            class="btn btn-primary btn-icon-split btn-sm">
-                                                            <span class="icon text-white-100">
-                                                                <i class="fas fa-search"></i>
-                                                            </span>
-                                                            <span class="text">Cek Santri</span>
-                                                        </a>
+                                                    <tr>
+                                                        <td><?php echo $no++ ?></td>
+                                                        <td><?php echo $row['nm_kelas'] ?></td>
+                                                        <td><?php echo $row['tahun'] ?></td>
+                                                        <td><?php echo $jml ?> santri</td>
+                                                        <td style="text-align: center;">
+                                                            <a href="<?= 'cek_nisn.php?kls=' . $row['nm_kelas'] ?>" class="btn btn-primary btn-icon-split btn-sm">
+                                                                <span class="icon text-white-100">
+                                                                    <i class="fas fa-search"></i>
+                                                                </span>
+                                                                <span class="text">Cek Santri</span>
+                                                            </a>
 
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                    </tr>
                                                 <?php } ?>
 
 
