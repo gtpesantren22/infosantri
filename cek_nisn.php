@@ -40,9 +40,7 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -81,15 +79,13 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <a href="nisn.php" class="btn btn-warning btn-sm float-right"><i
-                                    class="fa fa-arrow-left"></i> Kembali</a>
+                            <a href="nisn.php" class="btn btn-warning btn-sm float-right"><i class="fa fa-arrow-left"></i> Kembali</a>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-sm" id="dataTable" width="100%"
-                                            cellspacing="0">
+                                        <table class="table table-bordered table-sm" id="" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -106,28 +102,26 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
 
                                                 while ($row = mysqli_fetch_assoc($sql)) {
                                                 ?>
-                                                <tr>
-                                                    <td><?= $no++ ?></td>
-                                                    <td><?= $row['nama'] ?></td>
-                                                    <td><?= $row['desa'] . '-' . $row['kec'] . '-' . $row['kab'] ?></td>
-                                                    <form action="" method="post">
-                                                        <input type="hidden" name="nis" value="<?= $row['nis']; ?>">
-                                                        <td><input type="number" name="nisn" class="form-control"
-                                                                value="<?= $row['nisn']; ?>"></td>
-                                                        <!-- <td><?= $row['k_formal'] . '-' . $row['jurusan'] . '-' . $row['r_formal'] . '-' . $row['t_formal'] ?> -->
-                                                        </td>
+                                                    <tr>
+                                                        <td><?= $no++ ?></td>
+                                                        <td><?= $row['nama'] ?></td>
+                                                        <td><?= $row['desa'] . '-' . $row['kec'] . '-' . $row['kab'] ?></td>
+                                                        <form action="" method="post">
+                                                            <input type="hidden" name="nis" value="<?= $row['nis']; ?>">
+                                                            <td><input type="number" name="nisn" class="form-control" value="<?= $row['nisn']; ?>"></td>
+                                                            <!-- <td><?= $row['k_formal'] . '-' . $row['jurusan'] . '-' . $row['r_formal'] . '-' . $row['t_formal'] ?> -->
+                                                            </td>
 
-                                                        <td style="text-align: center;">
-                                                            <button class="btn btn-success btn-icon-split btn-sm"
-                                                                type="submit" name="save1">
-                                                                <span class="icon text-white-100">
-                                                                    <i class="fas fa-check"></i>
-                                                                </span>
-                                                                <span class="text">Save</span>
-                                                            </button>
-                                                        </td>
-                                                    </form>
-                                                </tr>
+                                                            <td style="text-align: center;">
+                                                                <button class="btn btn-success btn-icon-split btn-sm" type="submit" name="save1">
+                                                                    <span class="icon text-white-100">
+                                                                        <i class="fas fa-check"></i>
+                                                                    </span>
+                                                                    <span class="text">Save</span>
+                                                                </button>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
                                                 <?php } ?>
 
 
@@ -171,9 +165,9 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
                 <script src="js/demo/datatables-demo.js"></script>
 
                 <script>
-                $(document).ready(function() {
-                    $('#example').DataTable();
-                });
+                    $(document).ready(function() {
+                        $('#example').DataTable();
+                    });
                 </script>
 
 </body>
