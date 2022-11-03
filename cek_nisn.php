@@ -79,6 +79,8 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
+                            <a href="exp_nisn.php?kls=<?= $_GET['kls']; ?>" class="btn btn-success btn-sm"><i class="fa fa-download"></i> Download File Template</a>
+                            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#staticBackdrop"><i class="fa fa-upload"></i> Upload File</button>
                             <a href="nisn.php" class="btn btn-warning btn-sm float-right"><i class="fa fa-arrow-left"></i> Kembali</a>
                         </div>
                         <div class="card-body">
@@ -135,7 +137,33 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
                 </div>
                 <!-- End of Content Wrapper -->
 
-
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Upload File NISN yang sudah lengkap</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="up_nisn.php" method="post" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                <b><i>* Diharap untuk tidak mengubah format template hasil download yang akan diupload disini</i></b>
+                                    <div class="form-group">
+                                        <input type="hidden" name="kls" value="<?= $_GET['kls'] ?>">
+                                        <label for="">Pilih file</label>
+                                        <input type="file" name="file" id="" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- End of Page Wrapper -->
 

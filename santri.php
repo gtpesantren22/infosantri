@@ -17,10 +17,10 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
 $level = $dt['level'];
 $jkl = $_GET['jk'];
 
-if ($level === 'admin') {
-    $sql = mysqli_query($conn, "SELECT * FROM tb_santri WHERE jkl = '$jkl' ");
+if ($level === 'madin') {
+    $sql = mysqli_query($conn, "SELECT * FROM tb_santri WHERE jkl = '$jkl' AND aktif = 'Y' ORDER BY k_formal ASC ");
 } else {
-    $sql = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND jkl = '$jkl' AND aktif = 'Y' ");
+    $sql = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND jkl = '$jkl' AND aktif = 'Y' ORDER BY k_formal ASC ");
 }
 
 ?>
@@ -72,7 +72,7 @@ if ($level === 'admin') {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><b>DATA SANTRI PULANG</b></h1>
+                    <h1 class="h3 mb-2 text-gray-800"><b>DATA SANTRI </b></h1>
                     <hr>
 
 
