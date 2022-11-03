@@ -28,6 +28,20 @@
     </div>
 
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagessa" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Data Santri</span>
+        </a>
+        <div id="collapsePagessa" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Putra & Putri</h6>
+                <a class="collapse-item" href="santri.php?jk=Laki-laki">Putra</a>
+                <a class="collapse-item" href="santri.php?jk=Perempuan">Putri</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="santri_pulang.php">
             <i class="fas fa-fw fa-car"></i>
             <span>Santri Pulang</span></a>
@@ -38,6 +52,7 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Santri Sakit</span></a>
     </li>
+
     <!-- Nav Item - Utilities Collapse Menu -->
     <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">

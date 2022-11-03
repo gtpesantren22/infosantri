@@ -10,14 +10,14 @@ if (!isset($_SESSION['truecaller'])) {
                 ";
     exit;
 }
-$id = $_GET['id'];
-$data = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM sakit WHERE id_sakit = $id"));
 
-$id_sakit = $data['nis'];
-$data2 = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM tb_santri WHERE nis = $id_sakit"));
+
+$id_sakit = $_GET['id'];
+$data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_santri WHERE nis = $id_sakit"));
 
 $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
+$level = $dt['level'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +64,7 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><b>DATA SANTRI SAKIT</b></h1>
+                    <h1 class="h3 mb-2 text-gray-800"><b>Detail Santri</b></h1>
                     <hr>
 
 
@@ -78,26 +78,17 @@ $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user =
 
 
                                 <label>Nama Santri :</label><br>
-                                <input type="text" class="form-control" value="<?php echo $data2['nama'] ?>" disabled>
-                                <label>DS :</label><br>
-                                <input type="text" class="form-control" value="<?php echo $data['ds'] ?>" disabled>
-                                <label>DO :</label><br>
-                                <input type="text" class="form-control" value="<?php echo $data['do'] ?>" disabled>
-                                <label>Tanggal Sakit :</label><br>
-                                <input type="text" class="form-control" value="<?php echo $data['tgl_sakit'] ?>" disabled>
-                                <label>Tanggal Sembuh :</label><br>
-                                <input type="text" class="form-control" value="<?php echo $data['tgl_sakit'] ?>" disabled>
-                                <label>Status :</label><br>
-                                <input type="text" class="form-control" value="<?php echo $data['status'] ?>" disabled>
-                                <label>Kategori :</label><br>
-                                <input type="text" class="form-control" value="<?php echo $data['kategori'] ?>" disabled>
+                                <input type="text" class="form-control" value="<?= $data['nama'] ?>" disabled>
+                                <label>Alamat :</label><br>
+                                <input type="text" class="form-control" value="<?= $data['desa'] . ' - ' . $data['kec'] . ' - ' . $data['kab'] ?>" disabled>
+                                <label>Kelas Formal</label><br>
+                                <input type="text" class="form-control" value="<?= $data['k_formal'] . ' - ' . $data['jurusan'] . ' - ' . $data['r_formal'] . ' - ' . $data['t_formal'] ?>" disabled>
+                                <label>Kelas Madin</label><br>
+                                <input type="text" class="form-control" value="<?= $data['k_madin']  . ' - ' . $data['r_madin'] ?>" disabled>
+                                <label>Komplek/kamar :</label><br>
+                                <input type="text" class="form-control" value="<?= $data['komplek']  . ' - ' . $data['kamar'] . ' - ' . $data['wali'] ?>" disabled>
+
                                 <br>
-                                <a href="santri_sakit.php" class="btn btn-danger btn-icon-split btn-sm">
-                                    <span class="icon text-white-100">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                    </span>
-                                    <span class="text">Kembali</span>
-                                </a>
                             </div>
                         </div>
                     </div>

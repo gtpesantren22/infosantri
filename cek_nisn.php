@@ -36,7 +36,7 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB admin 2 - Blank</title>
+    <title>Info Santri PPDWk</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

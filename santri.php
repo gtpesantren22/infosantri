@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 include 'config/koneksi.php';
 if (!isset($_SESSION['truecaller'])) {
@@ -10,18 +11,19 @@ if (!isset($_SESSION['truecaller'])) {
                 ";
     exit;
 }
+
 $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
 $level = $dt['level'];
+$jkl = $_GET['jk'];
 
-if($level === 'admin'){
-    $sql = mysqli_query($koneksi, "SELECT * FROM tb_santri JOIN sakit ON tb_santri.nis = sakit.nis WHERE status = 'Sakit'");
-}else{
-    $sql = mysqli_query($koneksi, "SELECT * FROM tb_santri JOIN sakit ON tb_santri.nis = sakit.nis WHERE status = 'Sakit' AND tb_santri.t_formal = '$level'");
+if ($level === 'admin') {
+    $sql = mysqli_query($conn, "SELECT * FROM tb_santri WHERE jkl = '$jkl' ");
+} else {
+    $sql = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND jkl = '$jkl' AND aktif = 'Y' ");
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,6 +40,9 @@ if($level === 'admin'){
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -67,7 +72,7 @@ if($level === 'admin'){
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><b>DATA SANTRI SAKIT</b></h1>
+                    <h1 class="h3 mb-2 text-gray-800"><b>DATA SANTRI PULANG</b></h1>
                     <hr>
 
 
@@ -78,14 +83,13 @@ if($level === 'admin'){
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nis</th>
                                             <th>Nama</th>
+                                            <th>Alamat</th>
                                             <th>Kelas Formal</th>
-                                            <th>Sakit</th>
                                             <th style="text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
@@ -93,18 +97,16 @@ if($level === 'admin'){
                                         <?php
                                         include 'config/koneksi.php';
                                         $no = 1;
-
+                                        // $sql = mysqli_query($koneksi2, "SELECT * FROM tb_santri  WHERE pulang.ket = 0 AND tb_santri.t_formal = '$level' ");
                                         while ($row = mysqli_fetch_assoc($sql)) {
                                         ?>
                                             <tr>
-                                                <td><?php echo $no++ ?></td>
-                                                <td><?php echo $row['nis'] ?></td>
-                                                <td><?php echo $row['nama'] ?></td>
-                                                <td><?php echo $row['k_formal'] . ' - ' . $row['t_formal'] ?></td>
-                                                <td><?php echo $row['ds'] ?></td>
-
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $row['nama'] ?></td>
+                                                <td><?= $row['desa'] . ' - ' . $row['kec'] . ' - ' . $row['kab'] ?></td>
+                                                <td><?= $row['k_formal'] . ' - ' . $row['t_formal'] ?></td>
                                                 <td style="text-align: center;">
-                                                    <a href="<?= 'detail_santri_sakit.php?id=' . $row['id_sakit'] ?>" class="btn btn-success btn-icon-split btn-sm">
+                                                    <a href="<?= 'detail_santri.php?id=' . $row['nis'] ?>" class="btn btn-success btn-icon-split btn-sm">
                                                         <span class="icon text-white-100">
                                                             <i class="fas fa-cog"></i>
                                                         </span>
@@ -114,7 +116,6 @@ if($level === 'admin'){
                                                 </td>
                                             </tr>
                                         <?php } ?>
-
 
                                     </tbody>
                                 </table>
@@ -144,6 +145,13 @@ if($level === 'admin'){
 
                 <!-- Custom scripts for all pages-->
                 <script src="js/sb-admin-2.min.js"></script>
+
+                <!-- Page level plugins -->
+                <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+                <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+                <!-- Page level custom scripts -->
+                <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 

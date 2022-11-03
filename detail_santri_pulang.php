@@ -33,7 +33,7 @@ $data2 = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT * FROM tb_santri WHE
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB admin 2 - Blank</title>
+    <title>Info Santri PPDWk</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

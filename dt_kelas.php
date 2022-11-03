@@ -34,7 +34,7 @@ if ($level == 'admin') {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB admin 2 - Blank</title>
+    <title>Info Santri PPDWk</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -114,11 +114,11 @@ if ($level == 'admin') {
                                                         <td><?php echo $row['tahun'] ?></td>
                                                         <td><?php echo $jml ?> santri</td>
                                                         <td style="text-align: center;">
-                                                            <a href="<?= 'cek_formal.php?kls=' . $row['nm_kelas'] ?>" class="btn btn-primary btn-icon-split btn-sm">
-                                                                <span class="icon text-white-100">
-                                                                    <i class="fas fa-search"></i>
-                                                                </span>
-                                                                <span class="text">Cek Santri</span>
+                                                            <a href="<?= 'cek_formal.php?kls=' . $row['nm_kelas'] ?>" class="btn btn-primary btn-sm">
+                                                                <span class="text">Cek</span>
+                                                            </a>
+                                                            <a href="<?= 'del_formal.php?kls=' . $row['nm_kelas'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin akan dihapus?') ">
+                                                                <span class="text">Del</span>
                                                             </a>
 
                                                         </td>
