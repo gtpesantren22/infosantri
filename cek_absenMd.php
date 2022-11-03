@@ -206,6 +206,36 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                 </div>
                 <!-- End of Content Wrapper -->
 
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Upload File Absen yang sudah lengkap</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="up_absenMd.php" method="post" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    <b><i>* Diharap untuk tidak mengubah format template hasil download yang akan diupload disini</i></b>
+                                    <div class="form-group">
+                                        <input type="hidden" name="kls" value="<?= $_GET['kls'] ?>">
+                                        <input type="hidden" name="tgl" value="<?= $tgl ?>">
+                                        <input type="hidden" name="jkl" value="<?= $jkl ?>">
+                                        <label for="">Pilih file</label>
+                                        <input type="file" name="file" id="" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- End of Page Wrapper -->
 
                 <!-- Scroll to Top Button-->
@@ -238,33 +268,7 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
 
 </html>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Upload File Absen yang sudah lengkap</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="#" method="post" enctype="multipart/form-data">
-                <div class="modal-body">
-                    <b><i>* Diharap untuk tidak mengubah format template hasil download yang akan diupload disini</i></b>
-                    <div class="form-group">
-                        <input type="hidden" name="kls" value="<?= $_GET['kls'] ?>">
-                        <label for="">Pilih file</label>
-                        <input type="file" name="file" id="" class="form-control" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 <?php
 
