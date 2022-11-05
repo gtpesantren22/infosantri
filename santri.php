@@ -90,6 +90,7 @@ if ($level === 'madin') {
                                             <th>Nama</th>
                                             <th>Alamat</th>
                                             <th>Kelas Formal</th>
+                                            <th>Kelas Madin</th>
                                             <th style="text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
@@ -105,6 +106,7 @@ if ($level === 'madin') {
                                                 <td><?= $row['nama'] ?></td>
                                                 <td><?= $row['desa'] . ' - ' . $row['kec'] . ' - ' . $row['kab'] ?></td>
                                                 <td><?= $row['k_formal'] . ' - ' . $row['t_formal'] ?></td>
+                                                <td><?= $row['k_madin'] . ' - ' . $row['r_madin'] ?></td>
                                                 <td style="text-align: center;">
                                                     <a href="<?= 'detail_santri.php?id=' . $row['nis'] ?>" class="btn btn-success btn-icon-split btn-sm">
                                                         <span class="icon text-white-100">
