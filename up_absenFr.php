@@ -27,13 +27,13 @@ for ($i = 3; $i <= $jumbar; $i++) {
     $alpha = $data->val($i, 10);
     $ket = $data->val($i, 11);
 
-    mysqli_query($conn, "UPDATE absen_md SET alpha = '$alpha', izin = '$izin', sakit = '$sakit', ket = '$ket' WHERE nis = '$nis' AND minggu = $mg AND bulan = $bln AND ta = '$ta'  ");
+    mysqli_query($conn, "UPDATE absen SET alpha = '$alpha', izin = '$izin', sakit = '$sakit', ket = '$ket' WHERE nis = '$nis' AND minggu = $mg AND bulan = $bln AND ta = '$ta'  ");
 
     $success++;
 }
 
 unlink($_FILES['file']['name']);
-$link = 'cek_absenMd.php?kls='.$_POST['kls'].'&tgl='. $_POST['tgl'] . '&jkl=' . $_POST['jkl'];
+$link = 'cek_absen.php?kls='.$_POST['kls'].'&tgl='. $_POST['tgl'];
 if ($success > 0) {
     echo "
         <script>
