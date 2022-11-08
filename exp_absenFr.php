@@ -45,7 +45,7 @@
         $r_formal = $kls[2];
         $t_formal = $kls[3];
 
-        $qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE a.tanggal = '$tgl' AND b.t_formal = '$t_formal' AND b.jurusan = '$jurusan' AND b.r_formal = '$r_formal' AND b.k_formal = '$k_formal' AND b.aktif = 'Y' ");
+        $qr = mysqli_query($conn, "SELECT a.*, b.nama FROM absen a JOIN tb_santri b ON a.nis=b.nis WHERE a.tanggal = '$tgl' AND b.t_formal = '$t_formal' AND b.jurusan = '$jurusan' AND b.r_formal = '$r_formal' AND b.k_formal = '$k_formal' AND b.aktif = 'Y' ORDER BY nama ASC ");
 
     ?>
 
