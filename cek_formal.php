@@ -22,6 +22,8 @@ $t_formal = $kls[3];
 
 $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_formal' AND r_formal = '$r_formal' AND jurusan = '$jurusan' AND t_formal = '$t_formal' AND aktif = 'Y' ORDER BY nama ASC ");
 
+$dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$level'");
+
 
 ?>
 
@@ -80,6 +82,10 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Tambah Santri</button>
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal2"><i class="fa fa-add"></i> Naik Kelas</button>
+                            <?php if ($k_formal === 'XII' || $k_formal === 'IX') : ?>
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3"><i class="fa fa-times"></i> Luluskan</button>
+                            <?php endif; ?>
                             <a href="dt_kelas.php" class="btn btn-warning btn-sm float-right"><i class="fa fa-arrow-left"></i> Kembali</a>
                         </div>
                         <div class="card-body">
@@ -110,11 +116,11 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
                                                         <td><?= $row['k_formal'] . '-' . $row['jurusan'] . '-' . $row['r_formal'] . '-' . $row['t_formal'] ?></td>
 
                                                         <td style="text-align: center;">
-                                                            <a href="<?= 'del.php?kd=hps_for&id=' . $row['nis'] ?>" class="btn btn-danger btn-icon-split btn-sm">
+                                                            <a href="<?= 'del.php?kd=out_for&id=' . $row['nis'] ?>" onclick="return confirm('Yakin siswa ini akan dikeluarkan ?')" class="btn btn-danger btn-icon-split btn-sm">
                                                                 <span class="icon text-white-100">
                                                                     <i class="fas fa-times"></i>
                                                                 </span>
-                                                                <span class="text">Hapus</span>
+                                                                <span class="text">Keluarkan</span>
                                                             </a>
 
                                                         </td>
@@ -156,7 +162,7 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            $santri = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '' || r_formal = '' || jurusan = '' || t_formal = '' AND aktif = 'Y' ");
+                                            $santri = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND aktif = 'Y' AND (r_formal = '' || jurusan = '' || k_formal = '') ");
                                             while ($r3 = mysqli_fetch_assoc($santri)) {
                                             ?>
                                                 <tr>
@@ -183,6 +189,51 @@ $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_for
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Pilih Kelas</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h3>Siswa dari kelas : <?= $_GET['kls'] ?> akan dinaikkan ke</h3>
+                                <form action="" method="post">
+                                    <input type="hidden" name="kelasAsal" value="<?= $_GET['kls'] ?>">
+                                    <?php while ($dts = mysqli_fetch_assoc($dtKls)) : ?>
+                                        <input type="radio" name="kelasPindah" value="<?= $dts['nm_kelas'] ?>"> <?= $dts['nm_kelas'] ?><br>
+                                    <?php endwhile; ?>
+                                    <br>
+                                    <p style="color: red;"><i>Perhatian! <br> Jika data sudah dipindah maka tidak bisa dikembalikan lagi, kecuali dikembalikan satu persatu</i></p>
+                                    <button class="btn btn-sm btn-success" type="submit" name="pindah">Pindahkan</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Luluskan Siswa</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="post">
+                                    <input type="hidden" name="kelas" value="<?= $kls ?>">
+                                    <p style="color: red;"><i>Perhatian! <br> Fitur ini akan meluluskan semua siswa yang ada dikelas ini. Lanjutkan ?</i></p>
+                                    <button class="btn btn-sm btn-success" type="submit" name="lulus">Luluskan</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -241,9 +292,63 @@ if (isset($_POST['save'])) {
     if ($sql) {
         echo "
         <script>
+        window.location = '" . $link . "';
+        </script>
+        ";
+    }
+}
+
+if (isset($_POST['lulus'])) {
+    // $kelas = mysqli_real_escape_string($conn, $_POST['kelas']);
+    $sql = mysqli_query($koneksi3, "UPDATE tb_santri SET k_formal = '', r_formal = '', jurusan = '', t_formal = '' WHERE k_formal = '$k_formal' AND r_formal = '$r_formal' AND jurusan = '$jurusan' AND t_formal = '$t_formal' ");
+
+    $link = 'cek_formal.php?kls=' . $_GET['kls'];
+    if ($sql) {
+        echo "
+        <script>
+        window.location = '" . $link . "';
+        </script>
+        ";
+    }
+}
+
+if (isset($_POST['pindah'])) {
+    $kelasAsal = $_POST['kelasAsal'];
+    $klsAsal = explode('-', $kelasAsal);
+    $k_formalAsal = $klsAsal[0];
+    $jurusanAsal = $klsAsal[1];
+    $r_formalAsal = $klsAsal[2];
+    $t_formalAsal = $klsAsal[3];
+
+    $kelasPindah = $_POST['kelasPindah'];
+    $klsPindah = explode('-', $kelasPindah);
+    $k_formalPindah = $klsPindah[0];
+    $jurusanPindah = $klsPindah[1];
+    $r_formalPindah = $klsPindah[2];
+    $t_formalPindah = $klsPindah[3];
+
+    $cekIsi = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE k_formal = '$k_formalPindah' AND t_formal = '$t_formalPindah' AND jurusan = '$jurusanPindah' AND r_formal = '$r_formalPindah' AND aktif = 'Y' "));
+
+    if ($cekIsi > 0) {
+        $link = 'cek_formal.php?kls=' . $_GET['kls'];
+        echo "
+        <script>
+            alert('Kelas Ini belum kosong. Harap dipindah dulu');
             window.location = '" . $link . "';
         </script>
-    ";
+        ";
+    } else {
+        $sqlPindah = mysqli_query($koneksi3, "UPDATE tb_santri SET k_formal = '$k_formalPindah', r_formal = '$r_formalPindah', jurusan = '$jurusanPindah', t_formal = '$t_formalPindah' WHERE k_formal = '$k_formalAsal' AND r_formal = '$r_formalAsal' AND jurusan = '$jurusanAsal' AND t_formal = '$t_formalAsal' AND aktif = 'Y' ");
+
+        if ($sqlPindah) {
+            $link = 'cek_formal.php?kls=' . $_GET['kls'];
+            echo "
+        <script>
+            alert('Kelas berhasil dipindah');
+            window.location = '" . $link . "';
+        </script>
+        ";
+        }
     }
 }
 
