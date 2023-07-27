@@ -18,9 +18,9 @@ $level = $dt['level'];
 $jkl = $_GET['jk'];
 
 if ($level === 'madin') {
-    $sql = mysqli_query($conn, "SELECT * FROM tb_santri WHERE jkl = '$jkl' AND aktif = 'Y' ORDER BY k_formal ASC ");
+    $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE jkl = '$jkl' AND aktif = 'Y' ORDER BY k_formal ASC ");
 } else {
-    $sql = mysqli_query($conn, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND jkl = '$jkl' AND aktif = 'Y' ORDER BY k_formal ASC ");
+    $sql = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND jkl = '$jkl' AND aktif = 'Y' ORDER BY k_formal ASC ");
 }
 
 ?>
