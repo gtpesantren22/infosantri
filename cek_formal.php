@@ -156,6 +156,7 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
                                                 <th>No</th>
                                                 <th>Nama</th>
                                                 <th>Alamat</th>
+                                                <th>Jkl</th>
                                                 <th style="text-align: center;">Aksi</th>
                                             </tr>
                                         </thead>
@@ -169,6 +170,7 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
                                                     <td><?= $no++ ?></td>
                                                     <td><?= $r3['nama'] ?></td>
                                                     <td><?= $r3['desa'] . '-' . $r3['kec'] . '-' . $r3['kab'] ?></td>
+                                                    <td><?= $r3['jkl'] ?></td>
 
                                                     <td style="text-align: center;">
                                                         <form action="" method="post">
