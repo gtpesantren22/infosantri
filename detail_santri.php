@@ -77,7 +77,7 @@ $level = $dt['level'];
                             <div class="table-responsive">
 
 
-                                <label>Nama Santri :</label><br>
+                                <!-- <label>Nama Santri :</label><br>
                                 <input type="text" class="form-control" value="<?= $data['nama'] ?>" disabled>
                                 <label>Alamat :</label><br>
                                 <input type="text" class="form-control" value="<?= $data['desa'] . ' - ' . $data['kec'] . ' - ' . $data['kab'] ?>" disabled>
@@ -86,8 +86,66 @@ $level = $dt['level'];
                                 <label>Kelas Madin</label><br>
                                 <input type="text" class="form-control" value="<?= $data['k_madin']  . ' - ' . $data['r_madin'] ?>" disabled>
                                 <label>Komplek/kamar :</label><br>
-                                <input type="text" class="form-control" value="<?= $data['komplek']  . ' - ' . $data['kamar'] . ' - ' . $data['wali'] ?>" disabled>
+                                <input type="text" class="form-control" value="<?= $data['komplek']  . ' - ' . $data['kamar'] . ' - ' . $data['wali'] ?>" disabled> -->
 
+                                <h4>Identitas Santri</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+                                        <tr>
+                                            <td>NIS</td>
+                                            <td><?= $data['nis'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>NISN</td>
+                                            <td><?= $data['nisn'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>NIK</td>
+                                            <td><?= $data['nik'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>NO KK</td>
+                                            <td><?= $data['no_kk'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nama</td>
+                                            <td><?= $data['nama'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tetala</td>
+                                            <td><?= $data['tempat'] . ', ' . $data['tanggal'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alamat Jalan/Dusun</td>
+                                            <td><?= $data['jln'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>RT</td>
+                                            <td><?= $data['rt'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>RW</td>
+                                            <td><?= $data['rw'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Desa/Kelurahan</td>
+                                            <td><?= $data['desa'] . ' - ' . $data['kec'] . ' - ' . $data['kab'] . ' - ' . $data['prov'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jkl</td>
+                                            <td><?= $data['jkl'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Anak Ke</td>
+                                            <td><?= $data['anak_ke'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jml Saudara</td>
+                                            <td><?= $data['jml_sdr'] ?></td>
+                                        </tr>
+
+                                    </table>
+                                </div>
                                 <br>
                             </div>
                         </div>
