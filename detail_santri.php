@@ -76,22 +76,11 @@ $level = $dt['level'];
                         <div class="card-body">
                             <div class="table-responsive">
 
-
-                                <!-- <label>Nama Santri :</label><br>
-                                <input type="text" class="form-control" value="<?= $data['nama'] ?>" disabled>
-                                <label>Alamat :</label><br>
-                                <input type="text" class="form-control" value="<?= $data['desa'] . ' - ' . $data['kec'] . ' - ' . $data['kab'] ?>" disabled>
-                                <label>Kelas Formal</label><br>
-                                <input type="text" class="form-control" value="<?= $data['k_formal'] . ' - ' . $data['jurusan'] . ' - ' . $data['r_formal'] . ' - ' . $data['t_formal'] ?>" disabled>
-                                <label>Kelas Madin</label><br>
-                                <input type="text" class="form-control" value="<?= $data['k_madin']  . ' - ' . $data['r_madin'] ?>" disabled>
-                                <label>Komplek/kamar :</label><br>
-                                <input type="text" class="form-control" value="<?= $data['komplek']  . ' - ' . $data['kamar'] . ' - ' . $data['wali'] ?>" disabled> -->
-
                                 <h4>Identitas Santri</h4>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                         <tr>
+                                            <td rowspan="13"><img src="<?= 'https://dpontren.ppdwk.com/images/santri/' . $data['foto'] ?>" width="100"></td>
                                             <td>NIS</td>
                                             <td><?= $data['nis'] ?></td>
                                         </tr>
@@ -143,7 +132,82 @@ $level = $dt['level'];
                                             <td>Jml Saudara</td>
                                             <td><?= $data['jml_sdr'] ?></td>
                                         </tr>
-
+                                    </table>
+                                </div>
+                                <h4>Data Orang Tua</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+                                                <tr>
+                                                    <td>NIK Ayah</td>
+                                                    <td><?= $data['nik_a'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nama Ayah</td>
+                                                    <td><?= $data['bapak'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tetala</td>
+                                                    <td><?= $data['tempat_a'] . ', ', $data['tanggal_a'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pendidikan</td>
+                                                    <td><?= $data['pend_a'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pekerjaan</td>
+                                                    <td><?= $data['pkj_a'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status</td>
+                                                    <td><?= $data['status_a'] ?></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+                                                <tr>
+                                                    <td>NIK Ibu</td>
+                                                    <td><?= $data['nik_i'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nama Ibu</td>
+                                                    <td><?= $data['ibu'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tetala</td>
+                                                    <td><?= $data['tempat_i'] . ', ', $data['tanggal_i'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pendidikan</td>
+                                                    <td><?= $data['pend_i'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pekerjaan</td>
+                                                    <td><?= $data['pkj_i'] ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status</td>
+                                                    <td><?= $data['status_i'] ?></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4>Lain-lain</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+                                        <tr>
+                                            <td>Komplek</td>
+                                            <td><?= $data['komplek'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kamar</td>
+                                            <td><?= $data['kamar'] ?></td>
+                                        </tr>
                                     </table>
                                 </div>
                                 <br>
