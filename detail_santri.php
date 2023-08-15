@@ -168,7 +168,7 @@ $level = $dt['level'];
                                     </div>
                                     <div class="col-md-6">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+                                            <table class="table table-bordered table-sm" id="dataTable" width="150%" cellspacing="0">
                                                 <tr>
                                                     <td>NIK Ibu</td>
                                                     <td><?= $data['nik_i'] ?></td>
