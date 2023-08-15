@@ -11,9 +11,10 @@ if (!isset($_SESSION['truecaller'])) {
     exit;
 }
 
-
+$tkos = ['', 'Ny. Jamilah/Kantin', 'Gus Zaini', 'Ny. Farihah', 'Ny. Zahro', 'Ny. Saadah', 'Ny. Mamjudah', 'Ny. Naily Zulfa', 'Ny. Lathifah', 'Ny. Ummi Kultsum'];
 $id_sakit = $_GET['id'];
-$data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_santri WHERE nis = $id_sakit"));
+$data = mysqli_fetch_assoc(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE nis = $id_sakit"));
+$dom = mysqli_fetch_assoc(mysqli_query($koneksi3, "SELECT * FROM lemari_data WHERE nis = $id_sakit"));
 
 $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
@@ -80,7 +81,7 @@ $level = $dt['level'];
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                         <tr>
-                                            <td rowspan="13"><img src="<?= 'https://dpontren.ppdwk.com/images/santri/' . $data['foto'] ?>" width="100"></td>
+                                            <td rowspan="13"><img src="<?= 'https://dpontren.ppdwk.com/images/santri/' . $data['foto'] ?>" width="150"></td>
                                             <td>NIS</td>
                                             <td><?= $data['nis'] ?></td>
                                         </tr>
@@ -168,7 +169,7 @@ $level = $dt['level'];
                                     </div>
                                     <div class="col-md-6">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-sm" id="dataTable" width="150%" cellspacing="0">
+                                            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                                 <tr>
                                                     <td>NIK Ibu</td>
                                                     <td><?= $data['nik_i'] ?></td>
@@ -202,11 +203,27 @@ $level = $dt['level'];
                                     <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                         <tr>
                                             <td>Komplek</td>
-                                            <td><?= $data['komplek'] ?></td>
+                                            <td><?= $dom['komplek'] ?></td>
                                         </tr>
                                         <tr>
                                             <td>Kamar</td>
-                                            <td><?= $data['kamar'] ?></td>
+                                            <td><?= $dom['kamar'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lemari</td>
+                                            <td><?= $dom['lemari'] ?>, Loker : <?= $dom['loker'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wali Asuh</td>
+                                            <td><?= $dom['wali'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>No. HP</td>
+                                            <td><?= $data['hp'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tempat Kos</td>
+                                            <td><?= $tkos[$data['t_kos']] ?></td>
                                         </tr>
                                     </table>
                                 </div>
