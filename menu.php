@@ -37,6 +37,7 @@
                 <h6 class="collapse-header">Putra & Putri</h6>
                 <a class="collapse-item" href="santri.php?jk=Laki-laki">Putra</a>
                 <a class="collapse-item" href="santri.php?jk=Perempuan">Putri</a>
+                <a class="collapse-item" href="exp.php">Download Data</a>
             </div>
         </div>
     </li>

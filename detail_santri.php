@@ -16,6 +16,9 @@ $id_sakit = $_GET['id'];
 $data = mysqli_fetch_assoc(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE nis = $id_sakit"));
 $dom = mysqli_fetch_assoc(mysqli_query($koneksi3, "SELECT * FROM lemari_data WHERE nis = $id_sakit"));
 
+$nmwl = $dom['wali'];
+$dtwali = mysqli_fetch_assoc(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE nama = '$nmwl"));
+
 $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
 $level = $dt['level'];
@@ -215,7 +218,7 @@ $level = $dt['level'];
                                         </tr>
                                         <tr>
                                             <td>Wali Asuh</td>
-                                            <td><?= $dom['wali'] ?></td>
+                                            <td><?= $dom['wali'] ?> (<?= $dtwali['t_formal'] ?>)</td>
                                         </tr>
                                         <tr>
                                             <td>No. HP</td>
