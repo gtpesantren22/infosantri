@@ -76,7 +76,7 @@ if ($level === 'madin') {
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-
+                            <button class="btn btn-sm btn-success" onclick="window.location='sinkron.php'">Snkron Data Santri</button>
                         </div>
                         <div class="card-body">
                             <div class="row">

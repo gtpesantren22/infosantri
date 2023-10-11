@@ -100,7 +100,7 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                                             while ($ar = mysqli_fetch_array($dtkls)) {
                                                 $klsx = $ar['nm_kelas'];
                                             ?>
-                                                <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $mgr['tanggal']  ?>" class="btn btn-primary btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
+                                                <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $mgr['tanggal']  ?>" class="btn btn-primary btn-sm mb-1"><?= $klsx; ?></a>
                                             <?php } ?>
                                         </div>
                                         <?php
@@ -120,7 +120,7 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                                                     while ($ar = mysqli_fetch_array($dtkls)) {
                                                         $klsx = $ar['nm_kelas'];
                                                     ?>
-                                                        <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $tanggalKo  ?>" class="btn btn-danger btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
+                                                        <a href="<?= 'cek_absen.php?kls=' . $klsx . '&tgl=' . $tanggalKo  ?>" class="btn btn-danger btn-sm mb-1"><?= $klsx; ?></a>
                                                     <?php } ?>
                                                 </div>
                                             </div>

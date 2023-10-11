@@ -33,6 +33,7 @@ $qr2 = mysqli_query($conn, "SELECT a.*, b.nama FROM absen_md a JOIN tb_santri b 
 $dtsa = mysqli_fetch_assoc($qr2);
 $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 
+$back = $jkl == 'Laki-laki' ? 'absen_madinPa.php' : 'absen_madinPi.php';
 ?>
 
 <!DOCTYPE html>
@@ -90,6 +91,7 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <!-- kls=2-B&tgl=2022-11-04&jkl=Laki-laki -->
+                            <a href="<?= $back ?>" class="btn btn-warning btn-sm float-right"><i class="fa fa-arrow-left"></i> Kembali</a>
                             <a href="exp_absen.php?kls=<?= $_GET['kls'] . '&tgl=' . $tgl . '&jkl=' . $jkl ?>" class="btn btn-success btn-sm float-right"><i class="fa fa-download"></i> Download File Template</a>
                             <button class="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target="#staticBackdrop"><i class="fa fa-upload"></i> Upload File</button>
 

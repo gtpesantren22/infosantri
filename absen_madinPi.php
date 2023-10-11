@@ -41,7 +41,7 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Info Santri PPDWk</title>
+    <title>Info Santri PPDWK</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -93,15 +93,23 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <p><b>Absensi Terakhir : <?= $bn[$mgr['bulan']] . ', Minggu ke-' . $mgr['minggu']; ?></b></p>
-                                            <?php
+                                            <?php if ($mgr) { ?>
+                                                <p><b>Absensi Terakhir : <?= $bn[$mgr['bulan']] . ', Minggu ke-' . $mgr['minggu']; ?></b></p>
+                                                <?php
+                                            }
                                             $now = date('Y-m-d');
-                                            $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_madin  ");
+                                            $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_madin ORDER BY nm_kelas ASC ");
                                             while ($ar = mysqli_fetch_array($dtkls)) {
                                                 $klsx = $ar['nm_kelas'];
-                                            ?>
-                                                <a href="<?= 'cek_absenMd.php?kls=' . $klsx . '&tgl=' . $mgr['tanggal'] . '&jkl=Perempuan'  ?>" class="btn btn-primary btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
-                                            <?php } ?>
+                                                $kl = explode('-', $klsx);
+                                                $k_madin = $kl[0];
+                                                $r_madin = $kl[1];
+                                                $cek = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE aktif = 'Y' AND k_madin = '$k_madin' AND r_madin = '$r_madin' AND jkl  = 'Perempuan' "));
+                                                if ($cek > 0) {
+                                                ?>
+                                                    <a href="<?= 'cek_absenMd.php?kls=' . $klsx . '&tgl=' . $mgr['tanggal'] . '&jkl=Perempuan'  ?>" class="btn btn-primary btn-sm mb-1"><?= $klsx; ?></a>
+                                            <?php }
+                                            } ?>
                                         </div>
                                         <?php
                                         if (isset($_POST['cekdt'])) {
@@ -116,13 +124,20 @@ $bn = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", 
                                                     <p><b>Lihat Absensi Bulan <?= $bn[$dtks['bulan']] . ', Minggu ke-' . $dtks['minggu']; ?></b></p>
                                                     <?php
 
-                                                    $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_madin  ");
+                                                    $dtkls = mysqli_query($koneksi3, "SELECT * FROM kl_madin ORDER BY nm_kelas ASC ");
 
                                                     while ($ar = mysqli_fetch_array($dtkls)) {
                                                         $klsx = $ar['nm_kelas'];
+                                                        $kl = explode('-', $klsx);
+                                                        $k_madin = $kl[0];
+                                                        $r_madin = $kl[1];
+                                                        $cek = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE aktif = 'Y' AND k_madin = '$k_madin' AND r_madin = '$r_madin' AND jkl  = 'Perempuan' "));
+
+                                                        if ($cek > 0) {
                                                     ?>
-                                                        <a href="<?= 'cek_absenMd.php?kls=' . $klsx . '&tgl=' . $tanggalKo . '&jkl=Perempuan'  ?>" class="btn btn-danger btn-sm mb-1" target="_blank"><?= $klsx; ?></a>
-                                                    <?php } ?>
+                                                            <a href="<?= 'cek_absenMd.php?kls=' . $klsx . '&tgl=' . $tanggalKo . '&jkl=Perempuan'  ?>" class="btn btn-danger btn-sm mb-1"><?= $klsx; ?></a>
+                                                    <?php }
+                                                    } ?>
                                                 </div>
                                             </div>
                                         <?php } ?>
