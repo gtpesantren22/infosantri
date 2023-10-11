@@ -2,8 +2,8 @@
 
 include 'config/koneksi.php';
 
-// $api_url = 'https://dpontren.ppdwk.com/api-dataAll.php';
-$api_url = 'http://localhost/dpontren/api-dataAll.php';
+$api_url = 'https://dpontren.ppdwk.com/api-dataAll.php';
+// $api_url = 'http://localhost/dpontren/api-dataAll.php';
 
 // Token API yang akan dikirimkan
 $api_token = '2y10bMXpw6ajVkXVjP6nEjg4pus6rw5cZy0fBcukr614aS88CBsbna7YK';
