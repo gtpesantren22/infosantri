@@ -15,6 +15,9 @@ $ma_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml 
 $smk_sakit  = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) AS jml FROM sakit a JOIN tb_santri b ON a.nis=b.nis WHERE a.status = 'Sakit' AND b.t_formal = 'SMK' "));
 $smk_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml FROM pulang a JOIN tb_santri b ON a.nis=b.nis WHERE a.ket = 0 AND b.t_formal = 'SMk' "));
 
+$putra = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE aktif = 'Y' AND jkl = 'Laki-laki' AND t_formal = '$level' "));
+$putri = mysqli_num_rows(mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE aktif = 'Y' AND jkl = 'Perempuan' AND t_formal = '$level' "));
+
 ?>
 
 <div class="container-fluid">
@@ -28,13 +31,63 @@ $smk_pulang = mysqli_fetch_assoc(mysqli_query($koneksi2, "SELECT COUNT(*) AS jml
     <!-- Content Row -->
     <div class="row">
 
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-6 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-4 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Santri Putra</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $putra ?> Santri</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-500"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-4 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Santri Putri</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $putri ?> Santri</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-500"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-4 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Santri</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $putra + $putri ?> Santri</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-500"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Jumlah Santri Sakit</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $santri_sakit['jml'] ?> Santri</div>
                         </div>
