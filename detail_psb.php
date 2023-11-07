@@ -20,8 +20,8 @@ $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
 $level = $dt['level'];
 
-$linkFoto = 'https://psb.ppdwk.com/assets/berkas/foto/';
-// $linkFoto = 'http://localhost/psb/assets/berkas/foto/';
+// $linkFoto = 'https://psb.ppdwk.com/assets/berkas/foto/';
+$linkFoto = 'http://localhost/psb/assets/berkas/foto/';
 ?>
 <!DOCTYPE html>
 <html lang="en">

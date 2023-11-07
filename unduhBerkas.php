@@ -7,8 +7,8 @@ $zipFileName = 'berkas-' . $nis . '.zip';
 // Query database untuk mengambil nama berkas
 $sql = mysqli_query($psb24, "SELECT * FROM berkas_file JOIN foto_file ON berkas_file.nis=foto_file.nis WHERE berkas_file.nis = $nis ");
 $hasil = mysqli_fetch_assoc($sql);
-$path = 'https://psb.ppdwk.com/assets/berkas/';
-// $path = 'http://localhost/psb/assets/berkas/';
+// $path = 'https://psb.ppdwk.com/assets/berkas/';
+$path = '../psb/assets/berkas/';
 
 // Daftar berkas yang akan dimasukkan ke dalam ZIP
 $filesToZip = array(
@@ -17,6 +17,7 @@ $filesToZip = array(
     $path . 'ktp_ayah/' . $hasil['ktp_ayah'],
     $path . 'ktp_ibu/' . $hasil['ktp_ibu'],
     $path . 'foto/' . $hasil['diri'],
+    // 'img/dwk.jpg',
 );
 
 // Buat objek ZipArchive
