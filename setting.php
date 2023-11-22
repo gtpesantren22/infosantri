@@ -32,7 +32,7 @@ $level = $dt['level'];
     <title>Info Santri PPDWk</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="vendors/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
@@ -114,11 +114,11 @@ $level = $dt['level'];
 
 
                 <!-- Bootstrap core JavaScript-->
-                <script src="vendor/jquery/jquery.min.js"></script>
-                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="vendors/jquery/jquery.min.js"></script>
+                <script src="vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
 
                 <!-- Core plugin JavaScript-->
-                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                <script src="vendors/jquery-easing/jquery.easing.min.js"></script>
 
                 <!-- Custom scripts for all pages-->
                 <script src="js/sb-admin-2.min.js"></script>
@@ -127,13 +127,13 @@ $level = $dt['level'];
 
 </html>
 
-<?php 
+<?php
 
 if (isset($_POST['simpan'])) {
     $nama = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['nama']));
     $username = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['username']));
     $pass = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['password']));
-    
+
     if ($pass === '') {
         $sql = mysqli_query($conn, "UPDATE user SET nama = '$nama', username = '$username' WHERE id_user = $id_user ");
         if ($sql) {
@@ -153,7 +153,7 @@ if (isset($_POST['simpan'])) {
                     window.location = 'setting.php'
                 </script>
             ";
-        }else{
+        } else {
             $sql = mysqli_query($conn, "UPDATE user SET nama = '$nama', username = '$username', password = '$pass' WHERE id_user = $id_user ");
             if ($sql) {
                 echo "

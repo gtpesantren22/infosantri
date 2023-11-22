@@ -32,7 +32,7 @@ if ($success > 0) {
     echo "
         <script>
             alert('Upload OK');
-            window.location = 'cek_nisn.php?kls=".$_POST['kls']."';
+            window.location = 'cek_nisn.php?kls=" . $_POST['kls'] . "';
         </script>
     ";
 }
