@@ -20,6 +20,7 @@ $id_user = $_SESSION['id'];
 $dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id_user "));
 $level = $dt['level'];
 
+$linkFotoView = 'https://psb..ppdwk.com/assets/berkas/foto/';
 $linkFoto = '../psb/assets/berkas/foto/';
 ?>
 <!DOCTYPE html>
@@ -84,7 +85,7 @@ $linkFoto = '../psb/assets/berkas/foto/';
                                     <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                                         <tr>
                                             <td rowspan="13">
-                                                <img src="<?= $linkFoto . $foto['diri'] ?>" width="150"><br><br>
+                                                <img src="<?= $linkFotoView . $foto['diri'] ?>" width="150"><br><br>
                                                 <a href="unduhBerkas.php?nis=<?= $data['nis'] ?>" class="btn btn-sm btn-primary"><i class="fa fa-download"></i> Unduh Berkas</a>
                                             </td>
                                             <td>NIS</td>
