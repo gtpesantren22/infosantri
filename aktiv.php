@@ -1,3 +1,19 @@
+<?php
+include 'config/koneksi.php';
+session_start();
+if (!isset($_SESSION['truecaller'])) {
+    echo "
+                <script>
+                alert('Maaf, Login dulu');
+                window.location = 'login.php';
+                </script>
+                ";
+    exit;
+}
+$id = $_SESSION['id'];
+$dt = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM user WHERE id_user = $id "));
+$level = $dt['level'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,89 +68,93 @@
                                     </form>
                                     <?php
                                     include 'config/koneksi.php';
+                                    $dt = mysqli_query($conn, "SELECT * FROM user");
                                     if (isset($_POST['cek'])) {
                                         $token = $_POST['token'];
                                         if ($token == 'tokensudahbenar') {
 
                                             $dt = mysqli_query($conn, "SELECT * FROM user");
                                     ?>
-                                            <table class="table table-sm table-striped table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>Nama</th>
-                                                        <th>User</th>
-                                                        <th>Pass</th>
-                                                        <th>Level</th>
-                                                        <th>Aktif</th>
-                                                        <th>Act</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $no = 1;
-                                                    while ($r = mysqli_fetch_assoc($dt)) { ?>
-                                                        <tr>
-                                                            <td><?= $no++; ?></td>
-                                                            <td><?= $r['nama']; ?></td>
-                                                            <td><?= $r['username']; ?></td>
-                                                            <td><?= $r['password']; ?></td>
-                                                            <td><?= $r['level']; ?></td>
-                                                            <td><?= $r['aktif']; ?></td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal<?= $r['id_user']; ?>">
-                                                                    Aksi
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="exampleModal<?= $r['id_user']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Edit aksi
-                                                                        </h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <form action="" method="post">
-                                                                        <div class="modal-body">
-                                                                            <input type="hidden" name="id" value="<?= $r['id_user']; ?>">
-                                                                            <input type="hidden" name="nama" value="<?= $r['nama']; ?>">
-                                                                            <input type="hidden" name="hp" value="<?= $r['hp']; ?>">
-                                                                            <div class="form-group">
-                                                                                <label for="">Username</label>
-                                                                                <input type="text" name="username" class="form-control" value="<?= $r['username']; ?>">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="">Password</label>
-                                                                                <input type="text" name="password" class="form-control" value="<?= $r['password']; ?>">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="">Level</label>
-                                                                                <input type="text" name="level" class="form-control" value="<?= $r['level']; ?>">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="">Aktif</label>
-                                                                                <input type="text" name="aktif" class="form-control" value="<?= $r['aktif']; ?>">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <button type="submit" name="save" class="btn btn-primary">Save changes</button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    <?php } ?>
-                                                </tbody>
-                                            </table>
+
                                     <?php } else {
                                             echo "Token salah";
                                         }
                                     } ?>
+                                    <?php if ($level == 'admin') : ?>
+                                        <table class="table table-sm table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama</th>
+                                                    <th>User</th>
+                                                    <th>Pass</th>
+                                                    <th>Level</th>
+                                                    <th>Aktif</th>
+                                                    <th>Act</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $no = 1;
+                                                while ($r = mysqli_fetch_assoc($dt)) { ?>
+                                                    <tr>
+                                                        <td><?= $no++; ?></td>
+                                                        <td><?= $r['nama']; ?></td>
+                                                        <td><?= $r['username']; ?></td>
+                                                        <td><?= $r['password']; ?></td>
+                                                        <td><?= $r['level']; ?></td>
+                                                        <td><?= $r['aktif']; ?></td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal<?= $r['id_user']; ?>">
+                                                                Aksi
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModal<?= $r['id_user']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Edit aksi
+                                                                    </h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <form action="" method="post">
+                                                                    <div class="modal-body">
+                                                                        <input type="hidden" name="id" value="<?= $r['id_user']; ?>">
+                                                                        <input type="hidden" name="nama" value="<?= $r['nama']; ?>">
+                                                                        <input type="hidden" name="hp" value="<?= $r['hp']; ?>">
+                                                                        <div class="form-group">
+                                                                            <label for="">Username</label>
+                                                                            <input type="text" name="username" class="form-control" value="<?= $r['username']; ?>">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="">Password</label>
+                                                                            <input type="text" name="password" class="form-control" value="<?= $r['password']; ?>">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="">Level</label>
+                                                                            <input type="text" name="level" class="form-control" value="<?= $r['level']; ?>">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="">Aktif</label>
+                                                                            <input type="text" name="aktif" class="form-control" value="<?= $r['aktif']; ?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" name="save" class="btn btn-primary">Save changes</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    <?php endif ?>
                                 </div>
                             </div>
                         </div>

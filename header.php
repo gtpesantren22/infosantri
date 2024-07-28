@@ -49,6 +49,12 @@
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout
                 </a>
+                <?php if ($level == 'admin') : ?>
+                    <a class="dropdown-item" href="aktiv.php" target="_blank">
+                        <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                        User Akun
+                    </a>
+                <?php endif ?>
             </div>
         </li>
 
