@@ -122,7 +122,12 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
                                                                 </span>
                                                                 <span class="text">Keluarkan</span>
                                                             </a>
-
+                                                            <button class="btn btn-warning btn-icon-split btn-sm" data-toggle="modal" data-target="#pindahSiswa">
+                                                                <span class="icon text-white-100">
+                                                                    <!-- <i class="fas fa-times"></i> -->
+                                                                </span>
+                                                                <span class="text">Pindah</span>
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -157,13 +162,14 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
                                                 <th>Nama</th>
                                                 <th>Alamat</th>
                                                 <th>Jkl</th>
+                                                <th>Kls</th>
                                                 <th style="text-align: center;">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            $santri = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND aktif = 'Y' AND (r_formal = '' || jurusan = '' || k_formal = '') ");
+                                            $santri = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND aktif = 'Y' AND (r_formal = '' || jurusan = '' || k_formal = '' || t_formal = '') ");
                                             while ($r3 = mysqli_fetch_assoc($santri)) {
                                             ?>
                                                 <tr>
@@ -171,6 +177,7 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
                                                     <td><?= $r3['nama'] ?></td>
                                                     <td><?= $r3['desa'] . '-' . $r3['kec'] . '-' . $r3['kab'] ?></td>
                                                     <td><?= $r3['jkl'] ?></td>
+                                                    <td><?= $r3['k_formal'] . '-' . $r3['t_formal'] ?></td>
 
                                                     <td style="text-align: center;">
                                                         <form action="" method="post">
@@ -235,6 +242,29 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
                                     <input type="hidden" name="kelas" value="<?= $kls ?>">
                                     <p style="color: red;"><i>Perhatian! <br> Fitur ini akan meluluskan semua siswa yang ada dikelas ini. Lanjutkan ?</i></p>
                                     <button class="btn btn-sm btn-success" type="submit" name="lulus">Luluskan</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="pindahSiswa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Pindah Siswa</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="post">
+                                    <!-- <input type="hidden" name="kelasAsal" value="<?= $_GET['kls'] ?>"> -->
+                                    <?php while ($dts = mysqli_fetch_assoc($dtKls)) : ?>
+                                        <input type="radio" name="kelasPindah" value="<?= $dts['nm_kelas'] ?>"> <?= $dts['nm_kelas'] ?><br>
+                                    <?php endwhile; ?>
+                                    <br>
+                                    <p style="color: red;"><i>Perhatian! <br> Jika data sudah dipindah maka tidak bisa dikembalikan lagi, kecuali dikembalikan satu persatu</i></p>
+                                    <button class="btn btn-sm btn-success" type="submit" name="pindah">Pindahkan</button>
                                 </form>
                             </div>
                         </div>

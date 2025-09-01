@@ -242,13 +242,21 @@ if (isset($_POST['save'])) {
         ";
     } else {
 
-        $inn = mysqli_query($koneksi3, "INSERT INTO kl_formal VALUES ('', '$nmOk', '$lembaga', '$tahun') ");
+        $inn = mysqli_query($koneksi3, "INSERT INTO kl_formal(nm_kelas, lembaga, tahun) VALUES ( '$nmOk', '$lembaga', '$tahun') ");
         if ($inn) {
             echo "
             <script>
                 window.location = 'dt_kelas.php';
             </script>
             ";
+        } else {
+            $error = mysqli_error($koneksi3);
+            echo "
+            <script>
+                alert('Error tambah data');
+            </script>
+            ";
+            echo $error;
         }
     }
 }
