@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'config/koneksi.php';
+include 'config/ajax.php';
 if (!isset($_SESSION['truecaller'])) {
     echo "
                 <script>
@@ -81,7 +82,7 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Tambah Santri</button>
+                            <!-- <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Tambah Santri</button> -->
                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal2"><i class="fa fa-add"></i> Naik Kelas</button>
                             <?php if ($k_formal === 'XII' || $k_formal === 'IX') : ?>
                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3"><i class="fa fa-times"></i> Luluskan</button>
@@ -90,50 +91,38 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <h5>Data siswa kelas</h5>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered table-sm" id="kelasData" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama</th>
                                                     <th>Alamat</th>
                                                     <th>Kelas</th>
-                                                    <th style="text-align: center;">Aksi</th>
+                                                    <th style="text-align: center;">#</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php
-                                                include 'config/koneksi.php';
-                                                $no = 1;
-
-                                                while ($row = mysqli_fetch_assoc($sql)) {
-                                                ?>
-                                                    <tr>
-                                                        <td><?= $no++ ?></td>
-                                                        <td><?= $row['nama'] ?></td>
-                                                        <td><?= $row['desa'] . '-' . $row['kec'] . '-' . $row['kab'] ?></td>
-                                                        <td><?= $row['k_formal'] . '-' . $row['jurusan'] . '-' . $row['r_formal'] . '-' . $row['t_formal'] ?></td>
-
-                                                        <td style="text-align: center;">
-                                                            <a href="<?= 'del.php?kd=out_for&id=' . $row['nis'] ?>" onclick="return confirm('Yakin siswa ini akan dikeluarkan ?')" class="btn btn-danger btn-icon-split btn-sm">
-                                                                <span class="icon text-white-100">
-                                                                    <i class="fas fa-times"></i>
-                                                                </span>
-                                                                <span class="text">Keluarkan</span>
-                                                            </a>
-                                                            <button class="btn btn-warning btn-icon-split btn-sm" data-toggle="modal" data-target="#pindahSiswa">
-                                                                <span class="icon text-white-100">
-                                                                    <!-- <i class="fas fa-times"></i> -->
-                                                                </span>
-                                                                <span class="text">Pindah</span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                <?php } ?>
-
 
                                             </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Data semua santri</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-sm" id="tableAllData" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama</th>
+                                                    <th>Alamat</th>
+                                                    <th>Kelas</th>
+                                                    <th style="text-align: center;">#</th>
+                                                </tr>
+                                            </thead>
                                         </table>
                                     </div>
                                 </div>
@@ -169,30 +158,13 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            $santri = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND aktif = 'Y' AND (r_formal = '' || jurusan = '' || k_formal = '' || t_formal = '') ");
-                                            while ($r3 = mysqli_fetch_assoc($santri)) {
+                                            // $santri = mysqli_query($koneksi3, "SELECT * FROM tb_santri WHERE t_formal = '$level' AND aktif = 'Y' AND (r_formal = '' || jurusan = '' || k_formal = '' || t_formal = '') ");
+                                            // while ($r3 = mysqli_fetch_assoc($santri)) {
                                             ?>
-                                                <tr>
-                                                    <td><?= $no++ ?></td>
-                                                    <td><?= $r3['nama'] ?></td>
-                                                    <td><?= $r3['desa'] . '-' . $r3['kec'] . '-' . $r3['kab'] ?></td>
-                                                    <td><?= $r3['jkl'] ?></td>
-                                                    <td><?= $r3['k_formal'] . '-' . $r3['t_formal'] ?></td>
 
-                                                    <td style="text-align: center;">
-                                                        <form action="" method="post">
-                                                            <input type="hidden" name="nis" value="<?= $r3['nis']; ?>">
-                                                            <input type="hidden" name="jkl" value="<?= $r3['jkl']; ?>">
-                                                            <button type="submit" name="save" class="btn btn-success btn-icon-split btn-sm">
-                                                                <span class="icon text-white-100">
-                                                                    <i class="fas fa-check"></i>
-                                                                </span>
-                                                                <span class="text">Pilih</span>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
+                                            <?php
+                                            // } 
+                                            ?>
 
 
                                         </tbody>
@@ -300,7 +272,121 @@ $dtKls =  mysqli_query($koneksi3, "SELECT * FROM kl_formal WHERE lembaga = '$lev
 
                 <script>
                     $(document).ready(function() {
+                        loadTable()
                         $('#example').DataTable();
+                    });
+
+                    function loadTable() {
+                        // === Table AllData ===
+                        if ($.fn.DataTable.isDataTable('#tableAllData')) {
+                            $('#tableAllData').DataTable().ajax.reload(null, false);
+                        } else {
+                            $('#tableAllData').DataTable({
+                                ajax: {
+                                    url: "config/ajax.php",
+                                    type: "GET",
+                                    data: {
+                                        ket: "allData"
+                                    },
+                                    dataSrc: ""
+                                },
+                                columns: [{
+                                        data: "no"
+                                    },
+                                    {
+                                        data: "nama"
+                                    },
+                                    {
+                                        data: "alamat"
+                                    },
+                                    {
+                                        data: "formal"
+                                    },
+                                    {
+                                        data: "aksi"
+                                    }
+                                ]
+                            });
+                        }
+
+                        // === Table KelasData ===
+                        if ($.fn.DataTable.isDataTable('#kelasData')) {
+                            $('#kelasData').DataTable().ajax.reload(null, false);
+                        } else {
+                            $('#kelasData').DataTable({
+                                ajax: {
+                                    url: "config/ajax.php",
+                                    type: "GET",
+                                    data: {
+                                        ket: "kelasData",
+                                        k_formal: "<?= $k_formal ?>",
+                                        t_formal: "<?= $t_formal ?>",
+                                        r_formal: "<?= $r_formal ?>",
+                                        jurusan: "<?= $jurusan ?>"
+                                    },
+                                    dataSrc: ""
+                                },
+                                columns: [{
+                                        data: "no"
+                                    },
+                                    {
+                                        data: "nama"
+                                    },
+                                    {
+                                        data: "alamat"
+                                    },
+                                    {
+                                        data: "formal"
+                                    },
+                                    {
+                                        data: "aksi"
+                                    }
+                                ]
+                            });
+                        }
+                    }
+
+
+                    $('#kelasData').on('click', '.btn-out', function() {
+                        let nis = $(this).data('nis');
+                        if (confirm('Yakin akan dikelurkan ?')) {
+                            $.ajax({
+                                url: "config/ajax.php?ket=out",
+                                type: "POST",
+                                data: {
+                                    nis: nis
+                                },
+                                dataType: "json",
+                                success: function(res) {
+                                    loadTable()
+                                }
+                            });
+                        }
+                    });
+                    $('#tableAllData').on('click', '.btn-pindah', function() {
+                        let nis = $(this).data('nis');
+
+                        $.ajax({
+                            url: "config/ajax.php?ket=pindah",
+                            type: "POST",
+                            data: {
+                                nis: nis,
+                                k_formal: "<?= $k_formal ?>",
+                                t_formal: "<?= $t_formal ?>",
+                                r_formal: "<?= $r_formal ?>",
+                                jurusan: "<?= $jurusan ?>"
+                            },
+                            dataType: "json",
+                            success: function(res) {
+                                console.log(res.status);
+                                loadTable()
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("AJAX Error:", status, error);
+                                console.log(xhr.responseText);
+                            }
+                        });
+
                     });
                 </script>
 
